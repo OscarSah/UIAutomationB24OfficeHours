@@ -15,7 +15,7 @@ public class TC3_ClickGmailVerifyTitle {
         driver.get(url);
         //Find Gmail link and click on it
         driver.findElement(By.linkText("Gmail")).click();
-
+        //driver.findElement(By.partialLinkText("mail")).click();
         //verify title contains/starts with Gmail
         String expectedTitle = "Gmail";
         String actualTitle = driver.getTitle();
@@ -39,9 +39,6 @@ public class TC3_ClickGmailVerifyTitle {
         }
 
         driver.quit();
-
-
-
 
     }
 }
