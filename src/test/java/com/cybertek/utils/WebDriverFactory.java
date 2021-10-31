@@ -32,7 +32,7 @@ public class WebDriverFactory {
             return new FirefoxDriver();
         } else {
             System.out.println("Invalid BrowserType = " + browserType);
-            return null;
+            return null; //null means No object. empty
         }
     }
 }
