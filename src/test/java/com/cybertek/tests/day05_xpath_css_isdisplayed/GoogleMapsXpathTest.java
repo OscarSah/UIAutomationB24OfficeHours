@@ -22,7 +22,12 @@ public class GoogleMapsXpathTest {
         WebElement directions = driver.findElement(By.xpath("/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[1]/button/span/img"));
         directions.click();
 
+        Thread.sleep(2000);
 
+        WebElement startingAddressField = driver.findElement(By.xpath("//input[@placeholder='Choose starting point, or click on the map...']"));
+        startingAddressField.sendKeys("8104 amethyst dr, Mclean VA" + Keys.ENTER);
+
+        driver.quit();
 
     }
 }
