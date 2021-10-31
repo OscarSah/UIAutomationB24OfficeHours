@@ -15,7 +15,15 @@ public class WorldPopulationXpathTest {
         Thread.sleep(4000);
         //<div class="maincounter-number">
         WebElement worldPopulation = driver.findElement(By.xpath("//div[@class='maincounter-number']"));
+
         System.out.println(worldPopulation.getText());
+
+        for(int i = 1; i <= 10; i++) {
+            Thread.sleep(1000);
+            System.out.println(i + " - " + worldPopulation.getText());
+        }
+
+        driver.quit();
 
     }
 }
