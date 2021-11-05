@@ -12,7 +12,15 @@ public class P3_AmazonCSSPractice {
         driver.manage().window().maximize();
         driver.get(appUrl);
 
-        WebElement searchField = driver.findElement(By.cssSelector())
+        //type Wooden spoon
+        WebElement searchField = driver.findElement(By.cssSelector("input[id='twotabsearchtextbox']"));
+        WebElement searchButton = driver.findElement(By.cssSelector("input[value='Go']"));
+
+        searchField.sendKeys("wooden spoon");
+        searchButton.click();
+
+        //clear the search input box then search for "iphone 13 case"
+        searchField.clear();
 
     }
 }
