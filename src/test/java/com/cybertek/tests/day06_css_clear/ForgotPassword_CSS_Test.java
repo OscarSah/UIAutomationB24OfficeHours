@@ -32,7 +32,5 @@ public class ForgotPassword_CSS_Test {
             emailField.clear(); //clear and make empty
             emailField.sendKeys("student"+i+"@gmail.com");
         }
-
-
     }
 }

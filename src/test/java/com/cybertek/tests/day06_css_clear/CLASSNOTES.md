@@ -1,0 +1,242 @@
+
+
+Murodil Mobile # 202-375-1774
+-----------------------------
+
+11/04/2021
+----------
+
+Test Automation Day 06
+----------------------
+
+Last class:
+- Locators in Selenium: started learning about xpath locator
+- isDisplayed method to check if element is present and displayed
+- Review xpath:
+- css locator / css selector
+-----------------------------
+
+What is Xpath and how do we use it?
+
+-> it is one the locators in Selenium webdriver
+-> it helps us create custom locator based on the html tag and element attributes
+-> Especcially useful when there is no unique ID or Name of the webelement
+-> We can use xpath to locate elements using any property of the element
+or going from parent to child heirarchy
+-> there are 2 types of Xpath:
+1) absolute xpath
+2) relative xpath
+
+IQ: difference between absolute xpath vs relative xpath?
+difference between "/" vs "//" in selenium?
+
+1) absolute xpath :
+   -> starts with "/"
+   -> we start searching from root element html then go to each child until we reach the particular element
+   -> it is heavily dependent on the structure of elements parent to child.
+   Thats why not so reliable, because if any new element when added - will break the xpath:
+
+   <html>
+   	<body>
+   		<div>
+   			<p>
+   				<a href="https://www.google.com"> Google </a>
+   			</p>
+   		</div>
+   	</body>
+   </html>
+   Absolute xpath:
+   	/html/body/div/p/a
+
+   What if we add some element in between:
+
+   <html>
+   	<body>
+   	   <form>
+   			<div>
+   				<p>
+   					<a href="https://www.google.com"> Google </a>
+   					<input type="text">
+   					<input type="submit">
+   				</p>
+   			</div>
+   		</form>
+   	</body>
+   </html>
+
+   We need to update Absolute xpath:
+   /html/body/form/div/p/a
+
+As you see from this simple example that absolute xpath is not reliable.
+Especially nowadays, web pages are very dynamic and that parent/child structure changes frequently.
+
+So please do your best to AVOID using absolute xpath. it is not a good automation practice
+=======================
+
+RELATIVE XPATH:
+-> starts with "//"
+-> it means it will search for the matching element anywhere on the page. no need to start from html parent tag
+-> we can use any attribute+value of web element to uniquely locate it
+-> if there are several matching element for the xpath, we can use index number to locate the one we need
+-> there are many ways to use relative xpath:
+EX:
+
+<html>
+	<body>
+	   <form>
+			<div>
+				<p>
+					<a href="https://www.google.com"> Google </a>
+					<input type="text">
+					<input type="submit">
+				</p>
+			</div>
+		</form>
+	</body>
+</html>
+
+<a href="https://www.google.com"> Google </a>
+relative xpath for the link:
+
+1) //TAG_NAME[@ATT='VALUE']
+
+//a[@href='https://www.google.com']
+
+<input type="submit" name="java">
+
+//input[@type='submit']
+//input[@name='java']
+
+When writing xpath, Whenever there is unique name or id for element, we can use * for the tagname and provide unique name or id etc
+
+<input type="submit" name="java" id="nadir">
+
+//*[@name='java']
+//*[@d='nadir']
+
+* -> means "any" tag name or any matching tag with that attribute
+
+//input[@type='submit']
+
+When attribute is not unique on the page, then it is better to add the tagname as well.
+
+2) TEXT of ELEMENT:
+
+<html>
+	<body>
+	   <form>
+			<div>
+				<h2>Type your info below</h2>
+				<p>
+					<a href="https://www.google.com"> Google </a>
+					<input type="text">
+					<input type="submit">
+				</p>
+			</div>
+		</form>
+	</body>
+</html>
+
+<h2>Type your info below</h2>
+
+//h2 -> the tagname by itself is also a valid relative xpath, it means search for the element with tagname h2
+It might, might be ok when there is only 1 h2 element on the page.
+
+We can also include the text:
+
+//h2[text()='Type your info below']
+//h2[.='Type your info below']
+
+3) CONTAINS METHOD
+
+Also we can use contains method with text or any other attribute:
+
+<h2 class="header text">Type your info below</h2>
+
+//h2[contains(@class,'header')]
+
+//h2[contains(text(),'info')]
+
+http://www.cheat-sheets.org/saved-copy/Locators_table_1_0_2.pdf
+
+4) USING INDEXES:
+   index is the position number of the element, sometimes when there are several elements matchign the exact locator, in xpath we can use INDEX number [1]
+
+ex:
+<button>Button</button>
+<button>Button</button>
+
+//button[.='Button'] -> this xpath will have 2 matches, in order to specify, i can use the index
+
+(//button[.='Button'])[1]
+By.xpath("(//button[.='Button'])[1]") -> will match first button
+
+By.xpath("(//button[.='Button'])[2]") -> will match second button.
+
+We should go for index numbers only when it is absolutely required.
+Because index numbers can easily fail when new matching element is added.
+=================================================
+
+CSS LOCATOR:
+-> one of the 8 locators in Selenium
+-> we can create custom locators based on attributes of the elemement
+-> also referred as "css selector"
+-> similarly to xpath, we are not dependent on only id, name, or class attrubutes, we can use any attribute
+
+BASIC SYNTAX:
+TAG_NAME[ATTR='value']
+
+<a href="https://www.google.com"> Google </a>
+
+a[href='https://www.google.com']
+
+<div class="wooden" id="spoon" for="java">Locators of Selenium</div>
+
+css options:
+
+--> div[id='spoon']
+--> div[for='java']
+--> div[class='wooden']
+
+css does not support locating using text of the element
+
+
+CSS:     div[for='java']
+Xpath: //div[@for='java']
+===========================================
+
+Add new package day06_css_clear
+add new class P3_AmazonCSSPractice
+
+<input type="text" id="twotabsearchtextbox" value="" name="field-keywords" autocomplete="off" placeholder="" class="nav-input nav-progressive-attribute" dir="auto" tabindex="0" aria-label="Search">
+
+By.cssSelector("input[id='twotabsearchtextbox']")
+
+By.cssSelector("input[name='field-keywords']")
+
+By.cssSelector("input[aria-label='Search']")
+
+
+<input id="nav-search-submit-button" type="submit" class="nav-input nav-progressive-attribute" value="Go" tabindex="0">
+
+input[id='nav-search-submit-button']
+
+input[value='Go']
+-------------------------
+Exceptions in Selenium that we saw so far:
+
+noSuchElementException -> no matching element was found for the locator
+InvalidSelectorException -> the syntax of xpath or css is wrong, maybe missing [] etc
+
+StaleElementReferenceException -->
+Exception in thread "main" org.openqa.selenium.StaleElementReferenceException: stale element reference: element is not attached to the page document
+
+Lets say I locate the element and perform some steps, as a result, page refreshes , then the WebElement that I located before the refresh will ALL BE INVALID. THEY WILL BE STALE.
+We need to find the element one more time after EACH page refresh.
+
+--------------
+
+clear(); method in Selenium is used to clear the value of input fields.
+
+driver.findElement(By.cssSelector("input[name='field-keywords']")).clear();
+
