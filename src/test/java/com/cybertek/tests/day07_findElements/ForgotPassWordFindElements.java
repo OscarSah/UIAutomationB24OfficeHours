@@ -25,7 +25,16 @@ public class ForgotPassWordFindElements {
         //print text of second one
         System.out.println("second link = " + links.get(1).getText());
 
+        //Loop and print href value of each one
+        //iter -> enter or tab
+        for (WebElement link : links) {
+            System.out.println(link.getAttribute("href"));
+        }
 
+        //click on Home link at index 1
+        links.get(1).click();
+
+        driver.quit();
 
     }
 }
