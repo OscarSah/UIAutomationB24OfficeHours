@@ -20,7 +20,7 @@ public class CalculatorAddTest {
          */
         WebElement num1Elem = driver.findElement(By.cssSelector("span[onclick='r(5)']"));
         WebElement num2Elem = driver.findElement(By.cssSelector("span[onclick='r(3)']"));
-        //        <span onclick="r('+')" class="sciop">+</span>
+        //        <span onclick="r('+')" class="sciop"> + </span>
         WebElement addElem = driver.findElement(By.xpath("//span[.='+']"));
         WebElement equalElem = driver.findElement(By.xpath("//span[text()='=']"));
         //5+3=
@@ -37,7 +37,7 @@ public class CalculatorAddTest {
 
         System.out.println(num1 +" + "+ num2 + " = " + result.getText());
         String resultValue = result.getText();
-        //get rid of right/left spaces
+        //get rid//remove of right/left spaces
         resultValue = resultValue.trim();
         //convert from String to int
         int actualResult = Integer.parseInt(resultValue);
@@ -48,8 +48,6 @@ public class CalculatorAddTest {
             System.out.println("Fail: calculation mismatch");
         }
 
-
-
-
+        driver.quit();
     }
 }
