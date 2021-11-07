@@ -36,6 +36,18 @@ public class TC3_AddRemoveElements {
             deleteButton.click();
         }
 
+        //ForEach method with lambda expression (->)
+        //deleteButtons.forEach(delete -> delete.click());
+
+        //run findElements for delete buttons again and see if it is 0
+        deleteButtons = driver.findElements(By.xpath("//button[.='Delete']"));
+        if (deleteButtons.isEmpty()) {
+            System.out.println("PASS: All 50 buttons deleted successfully");
+        } else {
+            System.out.println("FAIL: Could not delete all 50 buttons");
+        }
+
+        driver.quit();
 
     }
 }
