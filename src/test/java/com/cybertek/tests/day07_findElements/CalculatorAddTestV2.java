@@ -14,7 +14,6 @@ public class CalculatorAddTestV2 {
          int num1 = 128, num2 = 90; etc
          */
         int expectedResult = num1 + num2;
-
         WebDriver driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
         driver.get(appUrl);
