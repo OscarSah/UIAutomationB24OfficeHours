@@ -16,8 +16,23 @@ public class CheckBoxesWithImplicitWait {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(url);
 
+        //locate first checkbox using name or id, xpath
         WebElement checkbox1 = driver.findElement(By.name("checkbox1"));
+        //click command will check it
         checkbox1.click();
+
+        //uncheck second checkbox
+        WebElement checkbox2 = driver.findElement(By.xpath("//input[@id='box2']"));
+        checkbox2.click();
+
+        System.out.println("checkbox 1 is selected ? - " + checkbox1.isSelected());
+        System.out.println("checkbox 2 is selected ? - " + checkbox2.isSelected());
+
+        if (!checkbox1.isSelected()) {
+            checkbox1.click();
+        } else {
+            System.out.println("Checkbox 1 is already selected");
+        }
 
 
 
