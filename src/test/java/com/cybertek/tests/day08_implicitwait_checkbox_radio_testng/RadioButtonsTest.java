@@ -5,10 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RadioButtonsTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String url = "http://practice.cybertekschool.com/radio_buttons";
         WebDriver driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
@@ -40,7 +41,17 @@ public class RadioButtonsTest {
         //click one by one , waiting 1 second in between
         //we can use isEnabled method to check if element is active/disabled
 
+        List<WebElement> radioButtons =driver.findElements(By.xpath("//input[@type='radio']"));
+        System.out.println("count = " + radioButtons.size());
 
+        for(WebElement radio : radioButtons) {
+            if (radio.isEnabled()) {
+                radio.click();
+            }
+            Thread.sleep(1234);
+        }
+
+        driver.quit();
 
     }
 }
