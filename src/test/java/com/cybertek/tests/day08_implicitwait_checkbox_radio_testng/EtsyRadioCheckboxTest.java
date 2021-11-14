@@ -40,9 +40,8 @@ public class EtsyRadioCheckboxTest {
 
         Thread.sleep(2000);
 
-        WebElement resultsCount = driver.findElement(By.xpath("(//span[contains(text(),'results')])[1]"));
+        WebElement resultsCount = driver.findElement(By.xpath("//span[contains(text(),'results,')]"));
         System.out.println("Results = " + resultsCount.getText());
-
         driver.quit();
 
     }
