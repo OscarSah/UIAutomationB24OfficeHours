@@ -34,7 +34,5 @@ public class CheckBoxesWithImplicitWait {
             System.out.println("Checkbox 1 is already selected");
         }
 
-
-
     }
 }
