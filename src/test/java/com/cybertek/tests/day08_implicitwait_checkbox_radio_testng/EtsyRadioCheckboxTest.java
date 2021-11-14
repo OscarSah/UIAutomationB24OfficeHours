@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.concurrent.TimeUnit;
 
 public class EtsyRadioCheckboxTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         String url = "https://www.etsy.com";
         WebDriver driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
@@ -24,5 +24,26 @@ public class EtsyRadioCheckboxTest {
         //click on All filters
         WebElement allFilters = driver.findElement(By.id("search-filter-button"));
         allFilters.click();
+
+        //select Free shipping, on sale, under $25 > click on Apply
+        WebElement freeShipping = driver.findElement(By.xpath("//label[@for='special-offers-free-shipping']"));
+        freeShipping.click();
+
+        WebElement onSale = driver.findElement(By.xpath("//label[@for='special-offers-on-sale']"));
+        onSale.click();
+
+        WebElement under$25 = driver.findElement(By.xpath("//label[@for='price-input-1']"));
+        under$25.click();
+
+        WebElement apply = driver.findElement(By.xpath("//button[@aria-label='Apply']"));
+        apply.click();
+
+        Thread.sleep(2000);
+
+        WebElement resultsCount = driver.findElement(By.xpath("(//span[contains(text(),'results')])[1]"));
+        System.out.println("Results = " + resultsCount.getText());
+
+        driver.quit();
+
     }
 }
