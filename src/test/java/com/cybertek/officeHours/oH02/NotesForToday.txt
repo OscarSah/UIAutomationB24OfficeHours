@@ -1,0 +1,33 @@
+Tester compare : Expected vs Actual
+
+Expected : comes from requirements or documentation
+Actual : from the browser
+
+to do any action on any webelement:
+1. need to locate
+2. do the action
+
+findElement method:
+        accepts as parameter -> string--locators
+        return --> single WebElement
+findElements method
+        accepts locator
+        return --> List<WebElement>
+
+8 Locators:
+id --> Unique however can be dynamic
+name --> check for duplicate
+class name --> good for findElements method to locate multiple elelemnts
+tagName -->  good for findElements method to locate multiple elelemnts
+LinkText and Partial LinkText --> <a ....anchor tag  href='somelinktext'
+
+If they locate more than one element, it will do the action to first element.
+
+xpath and css: custom locators that you can manipulate
+
+P.I.Q.: Most common exception I am getting?
+No such element exception
+What are the reasons:
+1. Wrong locators
+2. Delay in the page, your element is not loaded yet to the DOM (synchronization issue)
+3. Developers changed something
