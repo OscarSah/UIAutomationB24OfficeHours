@@ -31,3 +31,16 @@ What are the reasons:
 1. Wrong locators
 2. Delay in the page, your element is not loaded yet to the DOM (synchronization issue)
 3. Developers changed something
+
+
+TestNG
+annotations: instead main method now we will have @Test annotation
+
+
+CSS Locators:
+tagName[attribute='value']   main css syntax
+[attribute='value']  short syntax
+
+just for ID and Class, if the attribute is ID or Class
+#id
+.class
