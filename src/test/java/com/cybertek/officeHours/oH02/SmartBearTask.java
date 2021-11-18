@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class SmartBearTask {
 /*
 Test Case 1:
@@ -52,10 +54,50 @@ Hope to see you all and hope to have a productive time together.
 
         String expectedTitleAfterLogin = "Web Orders";
         String actualTitleAfterLogin = driver.getTitle();
+        System.out.println("expectedTitleAfterLogin = " + expectedTitleAfterLogin);
+        System.out.println("actualTitleAfterLogin = " + actualTitleAfterLogin);
         System.out.println(expectedTitleAfterLogin.equalsIgnoreCase(actualTitleAfterLogin));
 
         driver.close();
     }
 
+    @Test
+    public void checkBoxTest(){
+
+        WebDriver driver = WebDriverFactory.getDriver("chrome");
+        driver.manage().window().maximize();
+        // open the page
+        driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
+
+        // username box info
+        WebElement username = driver.findElement(By.cssSelector("#ctl00_MainContent_username"));
+        username.sendKeys("Tester");
+        // password box
+        WebElement password = driver.findElement(By.cssSelector("#ctl00_MainContent_password"));
+        password.sendKeys("test"+ Keys.ENTER);
+
+        // click on Check All button
+        WebElement checkAllButton = driver.findElement(By.id("ctl00_MainContent_btnCheckAll"));
+        checkAllButton.click();
+
+        // locating all the checkboxes
+        List<WebElement> allCheckBoxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+        for (WebElement eachCheckBox : allCheckBoxes) {
+            if (eachCheckBox.isSelected()!=true){
+                System.out.println("Not All selected");  // in TestNG we will learn assertions for these situations
+                break;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        driver.close();
+    }
 
 }
