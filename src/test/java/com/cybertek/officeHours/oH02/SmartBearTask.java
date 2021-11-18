@@ -48,8 +48,13 @@ Hope to see you all and hope to have a productive time together.
         WebElement password = driver.findElement(By.cssSelector("#ctl00_MainContent_password"));
         password.sendKeys("test"+ Keys.ENTER);
 
+        // check the title after login
 
+        String expectedTitleAfterLogin = "Web Orders";
+        String actualTitleAfterLogin = driver.getTitle();
+        System.out.println(expectedTitleAfterLogin.equalsIgnoreCase(actualTitleAfterLogin));
 
+        driver.close();
     }
 
 
