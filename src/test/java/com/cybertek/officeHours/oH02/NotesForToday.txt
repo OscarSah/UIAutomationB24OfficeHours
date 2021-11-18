@@ -44,3 +44,6 @@ tagName[attribute='value']   main css syntax
 just for ID and Class, if the attribute is ID or Class
 #id
 .class
+
+Stale element exception : second most common exception
+we need to refresh the Selenium code for the same WebElement

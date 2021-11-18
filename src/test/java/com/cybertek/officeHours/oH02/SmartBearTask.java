@@ -62,7 +62,7 @@ Hope to see you all and hope to have a productive time together.
     }
 
     @Test
-    public void checkBoxTest(){
+    public void checkBoxTest() throws InterruptedException {
 
         WebDriver driver = WebDriverFactory.getDriver("chrome");
         driver.manage().window().maximize();
@@ -82,14 +82,39 @@ Hope to see you all and hope to have a productive time together.
 
         // locating all the checkboxes
         List<WebElement> allCheckBoxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+
         for (WebElement eachCheckBox : allCheckBoxes) {
-            if (eachCheckBox.isSelected()!=true){
+            if (eachCheckBox.isSelected()==false){
                 System.out.println("Not All selected");  // in TestNG we will learn assertions for these situations
                 break;
             }
         }
 
+        WebElement uncheckAllButton = driver.findElement(By.id("ctl00_MainContent_btnUncheckAll"));
+        uncheckAllButton.click();
 
+        allCheckBoxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+        for (WebElement eachCheckBox : allCheckBoxes) {
+            if(eachCheckBox.isSelected()==true){
+                System.out.println("Not All check boxes unselected");
+                break;
+            }
+        }
+
+        allCheckBoxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+        System.out.println("Before I delete : " + allCheckBoxes.size());
+        WebElement itemForDeleting = driver.findElement(By.xpath("//tr//td[.='Paul Brown']/../td[1]/input"));
+        itemForDeleting.click();
+
+        Thread.sleep(3000);
+
+
+        WebElement deleteButton = driver.findElement(By.id("ctl00_MainContent_btnDelete"));
+        deleteButton.click();
+
+        allCheckBoxes = driver.findElements(By.cssSelector("input[type='checkbox']"));
+
+        System.out.println("After I delete : "+ allCheckBoxes.size());
 
 
 
