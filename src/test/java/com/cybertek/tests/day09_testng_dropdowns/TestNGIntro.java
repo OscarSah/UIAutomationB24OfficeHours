@@ -21,7 +21,7 @@ public class TestNGIntro {
         System.out.println("==========================");
     }
 
-    @Test
+    @Test(priority = 1) //run first
     public void test1() {
         System.out.println("Running test1 ...");
         int num = 10;
@@ -29,7 +29,7 @@ public class TestNGIntro {
         System.out.println("==========================");
     }
 
-    @Test //converts regular method to Test method
+    @Test(priority = 2) //converts regular method to Test method
     public void myTest2() {
         System.out.println("Running my Test 2 ..");
         String name = "Bob";
