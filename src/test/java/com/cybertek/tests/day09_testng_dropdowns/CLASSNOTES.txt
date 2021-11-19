@@ -1,0 +1,176 @@
+
+11/18/2021
+----------
+
+Test Automation Day 9.
+
+Set up TestNG
+More about testNg
+ How to work with drop downs in selenium
+-----------------------------------------
+
+Computer can understand any code, learn how to write code so that people can understand.
+
+if you code needs comments, it means you need to re-write cleaner way
+
+---Funny :) lol ! :
+I dont write comments, if it was hard to write, it should be hard to read.
+========
+
+add new package day09_testng_dropdowns
+
+add new class TestNGIntro
+
+To write testNG -> test new generation. Similar to JUnit
+
+Testing framework, that helps us write TEST code.
+TEST code can be Unit tests -> testing java classes, java methods etc
+TEST code can be Selenium, API, Database automation code.
+	that does smoke, regression etc tests
+
+How to write TestNG tests:
+	-> add dependency to pom.xml
+	-> Create a java class, like any other class.
+	EX:
+		public class EtsySearchTests {
+
+		}
+
+	-> add variables as needed and add methods for tests.
+	add @Test annotation on top of the method:
+	ex:
+		public class EtsySearchTests {
+			String url = "https://www.etsy.com";
+
+			@Test
+			public void searchItemTest() {
+				//selenium steps to search for item
+			}
+
+			@Test
+			public void searchItemsCountTest() {
+				//selenium steps to search for item
+			}
+
+
+		}
+	-> we can run single test or whole class:
+		When you run whole class, the order depends on the name of the @Test method, it will run alphabetically
+
+	-> Assertions :
+		Normally each test should have at least 1 assertion.
+		Assertions are used for verifying if expected value/behaviour is matching the actual one.
+		There is a class called Assert that comes with testNG.
+		It has many static methods, so we can call them with classname or DO static import:
+		Assert.assertTrue(56 > 10);
+		Assert.assertTrue(elem.getText().contains("hello"));
+		Assert.assertEquals(10, 10);
+		String exp = "Google";
+		String act = driver.getTitle();
+
+		Assert.assertEquals(act, exp);
+
+		If you do static import - no need to type the classname "Assert":
+		import static org.testng.Assert.*;
+
+		assertTrue(56 > 10);
+		assertTrue(elem.getText().contains("hello"));
+		assertEquals(10, 10);
+		String exp = "Google";
+		String act = driver.getTitle();
+		assertEquals(act, exp);
+
+
+		import static org.testng.Assert.*;
+
+		public class EtsySearchTests {
+			String url = "https://www.etsy.com";
+
+			@Test(priority=1)
+			public void searchItemTest() {
+				//selenium steps to search for item
+				driver.get(url);
+				assertEquals(driver.getTitle(), "Etsy..");
+
+
+			}
+
+			@Test(priority=2)
+			public void searchItemsCountTest() {
+				//selenium steps to search for item
+				int count = 400;
+				assertEquals(Integer.parseInt(elem.getText()), count);
+			}
+
+
+		}
+
+------------------------------------
+
+TestNG annotations
+
+@Test -> is used to make a method an executatable TestNG test.
+
+If we have multiple @Test methods, it will run alphabetically by default.
+
+@BeforeClass -> is used with a method and code in that method will run ONCE before all the tests. Normally we use this to open a browser, set up implicit wait, maximize, etc. or other steps that need to run one time to set up for the tests.
+
+@BeforeMethod -> method with this annotation runs before EACH/VERY test method.
+It could also be used to open the browser, or go back to homepage , basically set up the browser/application ready for the next test
+
+@AfterMethod -> method with this annotation runs AFTER EACH/every test
+
+@AfterClass -> runs ONCE at the end AFTER All the tests
+
+Setting the order of execution:
+	By default -> tests run in alphabetical order a-z
+	@Test(priority=1) , @Test(priority=2)... can be used to set the order manually.
+==========================
+
+add new class DropDownTests
+
+Working with Drop Downs in Selenium:
+
+Select tag is used to add drop down in HTML.
+
+EX:
+	<select id="countries">
+		<option value="TR">Turkey</option>
+		<option value="Bosnia">Bosnia</option>
+		<option value="Uzbekistan">Uzbekistan</option>
+		<option value="India">India</option>
+		<option value="Pakistan">Pakistan</option>
+		<option value="USA">USA</option>
+	</select>
+
+There is a class called "Select" in Selenium that makes working with drop downs easy.
+
+1) locate the Select tag
+2) pass the webelement to Select class constructor
+
+WebElement AllCountries = driver.findElement(By.id("countries"));
+Select allCountriesList = new Select(AllCountries);
+
+OR you can combine 2 steps into 1.
+
+Select allCountriesList = new Select(driver.findElement(By.id("countries")));
+
+----
+How to select item from list using select class object.
+
+1) by Text
+
+Select allCountriesList = new Select(driver.findElement(By.id("countries")));
+allCountriesList.selectByVisibleText("USA");
+
+2) By value
+
+Select allCountriesList = new Select(driver.findElement(By.id("countries")));
+allCountriesList.selectByValue("TR");
+
+3) By index
+
+Select allCountriesList = new Select(driver.findElement(By.id("countries")));
+allCountriesList.selectByIndex(1);
+====================================
+
