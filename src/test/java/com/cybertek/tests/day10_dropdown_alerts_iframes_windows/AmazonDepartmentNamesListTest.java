@@ -49,7 +49,7 @@ public class AmazonDepartmentNamesListTest {
         System.out.println("==== USING FOREACH METHOD + LAMBDA EXPRESSION ===");
         allDepartments.forEach(dept -> System.out.println(dept.getText()));
 
-
+        BREAK TILL 3:14 PM EST
 
     }
 
