@@ -210,6 +210,42 @@ What will happen next?
 The rest of code in failed test will be skipped.
 TestNG will continue to other following tests.
 It will not skip the other tests if one of them fails.
+=======================
+
+
+@Test(enabled = false) //skip this test
+public void testDemo() {
+    System.out.println("testDemo is running");
+}
+
+enabled = false can be used to skip a test for any reason.
+=======================
+
+MULTI SELECT DROP DOWN.
+It means you can select more than 1 option from a list.
+
+add a new class MultiSelectDropDown
+
+add set up with url http://practice.cybertekschool.com/dropdown
+=====================================
+
+How do you work with drop downs in Selenium?
+
+I firstly locate the element using one of 8 locators, then create a Select class object.
+I can use selectByVisibleText, selectByValue, selectByIndex methods to select specific item in the list.
+
+If i want to read all available options, I use getOptions method that returns list of webelements for all options, then I can loop through do whatever.
+
+if i want to assert if certain value is selected successfully or check the default value, I use getFirstSelectedOption method in Select class and get the text then assert.
+=====================================
+
+
+
+
+
+
+
+
 
 
 
