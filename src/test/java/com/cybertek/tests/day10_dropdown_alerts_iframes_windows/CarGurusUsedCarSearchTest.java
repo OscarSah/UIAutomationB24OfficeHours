@@ -1,7 +1,9 @@
 package com.cybertek.tests.day10_dropdown_alerts_iframes_windows;
 
 import com.cybertek.utils.WebDriverFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -27,7 +29,8 @@ public class CarGurusUsedCarSearchTest {
         //verify on correct page by checking the title
         String expTitle = "Buy & Sell Cars: Reviews, Prices, and Financing - CarGurus";
         Assert.assertEquals(driver.getTitle(), expTitle);
-
+        Select make = new Select(driver.findElement(By.id("carPickerUsed_makerSelect")));
+        make.selectByVisibleText("Toyota");
 
 
     }
