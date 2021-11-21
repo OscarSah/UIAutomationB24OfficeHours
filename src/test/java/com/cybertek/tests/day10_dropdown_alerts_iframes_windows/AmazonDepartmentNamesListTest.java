@@ -49,5 +49,13 @@ public class AmazonDepartmentNamesListTest {
         System.out.println("==== USING FOREACH METHOD + LAMBDA EXPRESSION ===");
         allDepartments.forEach(dept -> System.out.println(dept.getText()));
 
+
+
     }
+
+    @Test(enabled = false) //skip this test
+    public void testDemo() {
+        System.out.println("testDemo is running");
+    }
+
 }
