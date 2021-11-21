@@ -239,33 +239,38 @@ If i want to read all available options, I use getOptions method that returns li
 if i want to assert if certain value is selected successfully or check the default value, I use getFirstSelectedOption method in Select class and get the text then assert.
 =====================================
 
+WORKING WITH ALERTS IN SELENIUM:
+
+Alert is a pop up box, that we normally click yes, ok, or cancel etc.
+It will have some text, sometimes, we can even enter a value
+
+2 types of alerts that we can come across in Selenium.
+
+1) HTML alert, this type of alert is like normal html element, we locate it and we can click on Ok, or Cancel etc
+
+2) JavaScript alert, these are normally block the page, and we click on Ok, cancel, on it. You cannot inspect and locate it. We need to use a special Alert interface to handle these.
+
+Browser Pop-ups cannot be handled by selenium, these you will see normally when you want to save a file and the window with folder names are displayed. Selenium cannot handle those. We need some other library for these like Robot class
+----------------------------
+
+add new class HandlingAlertsTest
 
 
+3 types of Alerts in JavaScript:
+
+1) Information -> just OK/Accept button
+
+2) Confirmation
+3) Prompt, that accepts an input
 
 
+Alert interface is used to accept, dismiss java script alerts
+We need to swithTo().alert() first and assign to Alert interface type variable.
 
+Syntax:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Alert alert = driver.switchTo().alert();
+alert.accept(); ok
+alert.dismiss(); cancel
+alert.getText(); return the text
+alert.sendKeys(); will type a value
