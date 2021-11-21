@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 //import all static methods/Variables of Assert class
@@ -28,7 +29,7 @@ public class AmazonDepartmentNamesListTest {
     }
 
     @Test
-    public void amazonDepartmentTest() {
+    public void amazonDepartmentTest() throws InterruptedException {
         String expTitle = "Amazon.com. Spend less. Smile more.";
         assertEquals(driver.getTitle(), expTitle);
 
@@ -49,8 +50,17 @@ public class AmazonDepartmentNamesListTest {
         System.out.println("==== USING FOREACH METHOD + LAMBDA EXPRESSION ===");
         allDepartments.forEach(dept -> System.out.println(dept.getText()));
 
-        BREAK TILL 3:14 PM EST
+        //select each item by order and wait 400 ms in between
+        for(WebElement dept : allDepartments) {
+            departments.selectByVisibleText(dept.getText());
+            //Thread.sleep(400);
+        }
 
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 
     @Test(enabled = false) //skip this test
