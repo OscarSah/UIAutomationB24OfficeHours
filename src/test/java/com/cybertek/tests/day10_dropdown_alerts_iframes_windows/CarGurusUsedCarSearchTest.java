@@ -47,6 +47,13 @@ public class CarGurusUsedCarSearchTest {
         System.out.println("Selected Make = " + make.getFirstSelectedOption().getText());
         System.out.println("Selected Model = " + model.getFirstSelectedOption().getText());
 
+        //click on search
+        WebElement searchButton = driver.findElement(By.id("dealFinderForm_0"));
+        searchButton.click();
+
+        WebElement resultCount = driver.findElement(By.xpath("//span[@class='oKvYB4']/strong[2]"));
+        System.out.println("Result Count = " + resultCount.getText());
+
     }
 
 }
