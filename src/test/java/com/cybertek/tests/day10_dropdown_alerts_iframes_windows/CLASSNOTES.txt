@@ -269,7 +269,3 @@ if i want to assert if certain value is selected successfully or check the defau
 
 
 
-
-
-
-
