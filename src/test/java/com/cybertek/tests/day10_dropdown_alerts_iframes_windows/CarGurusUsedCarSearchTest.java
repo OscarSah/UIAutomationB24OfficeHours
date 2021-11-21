@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -22,6 +23,11 @@ public class CarGurusUsedCarSearchTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(url);
+    }
+
+    @AfterClass
+    public void tearDown() {
+        driver.quit();
     }
 
     @Test
@@ -54,6 +60,12 @@ public class CarGurusUsedCarSearchTest {
         WebElement resultCount = driver.findElement(By.xpath("//span[@class='oKvYB4']/strong[2]"));
         System.out.println("Result Count = " + resultCount.getText());
 
+        //assert that count is more than 0
+        int count = Integer.parseInt(resultCount.getText());
+        Assert.assertTrue(count > 0);
+
     }
+
+
 
 }
