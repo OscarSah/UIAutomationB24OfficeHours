@@ -4,12 +4,14 @@ import static com.cybertek.utils.WebDriverFactory.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 //import all static methods/Variables of Assert class
 import static org.testng.Assert.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonDepartmentNamesListTest {
@@ -34,5 +36,18 @@ public class AmazonDepartmentNamesListTest {
         Select departments = new Select(driver.findElement(By.id("searchDropdownBox")));
         String selectedOption = departments.getFirstSelectedOption().getText();
         assertEquals(selectedOption, "All Departments");
+
+        List<WebElement> allDepartments = departments.getOptions();
+        int countOfDepartments = allDepartments.size();
+        System.out.println("countOfDepartments = " + countOfDepartments);
+        assertTrue(countOfDepartments > 10, "Department names are missing");
+
+        //loop and print all available options
+        for (WebElement dept : allDepartments) {
+            System.out.println(dept.getText());
+        }
+        System.out.println("==== USING FOREACH METHOD + LAMBDA EXPRESSION ===");
+        allDepartments.forEach(dept -> System.out.println(dept.getText()));
+
     }
 }
