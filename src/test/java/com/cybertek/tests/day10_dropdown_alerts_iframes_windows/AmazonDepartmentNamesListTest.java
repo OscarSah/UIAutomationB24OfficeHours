@@ -34,6 +34,5 @@ public class AmazonDepartmentNamesListTest {
         Select departments = new Select(driver.findElement(By.id("searchDropdownBox")));
         String selectedOption = departments.getFirstSelectedOption().getText();
         assertEquals(selectedOption, "All Departments");
-
     }
 }
