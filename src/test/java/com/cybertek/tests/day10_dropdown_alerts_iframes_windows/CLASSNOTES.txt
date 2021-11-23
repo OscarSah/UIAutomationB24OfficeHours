@@ -1,0 +1,276 @@
+
+11/21/2021
+----------
+
+Test Automation Day 10
+----------------------
+
+November 25th - No Class - ThanksGivingDay
+------------------------------------------
+
+TestNG Unit Testing Framework in Java.
+	Similar: JUnit, NUnit
+
+Annotations to control the flow of test execution
+Assertions to do verifications
+------------------------------
+
+Select DropDowns In Selenium.
+	-> How to locate and create Select class object
+	-> how to select an item from the drop down
+-----------------------------
+
+add new package day10_dropdown_alerts_iframes_windows
+add new class CarGurusUsedCarSearchTest
+
+
+TestNG is popular with Selenium Automation, we use annotations like
+@BeforeClass, @BeforeMethod to set up the browser, set timeout, maximize, navigate to url
+
+@BeforeClass -> the method with this annotation runs ONCE before ALL tests.
+@BeforeMethod -> the method with this annotation runs before EVERY test
+
+Can we use both of them ?
+Yes, we can. If we want to organize setUp method into smaller steps.
+Some steps run once, and others run before each test.
+
+@Test -> method with this annotation is an executable TestNG test. We can have 1 or many @Test methods in our class.
+
+In Selenium, whenever we navigate to a page, by using get() method or by clicking a link/button, We firstly verify if correct expected page is displayed. Normally by checking the title or could be a custom page name added to the project.
+
+We can use ASSERTIONS in TestNG/JUnit to verify if title of the page is as expected.
+
+String expTitle = "Buy & Sell Cars: Reviews, Prices, and Financing - CarGurus";
+actual title comes from webdriver. driver.getTitle()
+
+Assert.assertEquals(driver.getTitle() , expTitle);
+
+-------------
+Aliia Esenbekova — Today at 10:39 AM
+Can you please show slowely how to open incognito? My is opening differentely, like it did before for you Murodil.
+
+File > New Incognito Window.
+It will open brand new , and does not remember logged in status or other activities.
+
+Selenium WebDriver opens windows in Incognito mode each time, it does not remember history or other details.
+--------------
+Title location on the page:
+head / title
+
+assertEquals(actual, expected)
+we can compare any primitives, String, lists, arrays if they are equal.
+
+If actual value and expected are not equal -> Assertion will fail the @Test
+---------------
+
+Select make of the used car:
+	Toyota
+
+Select model of toyota:
+	Sienna
+
+How to select a value from a drop down:
+
+1) Locate element using a locator
+2) Create Select class object and pass the element
+3) Select a value by using one of the methods
+
+Select make = new Select(driver.findElement(By.id("carPickerUsed_makerSelect")));
+make.selectByVisibleText("Toyota");
+
+In above line, we located the drop down using id inside the constructor of Select class.
+
+Select class is used to work with select drop downs in Selenium.
+Select class is part of selenium webdriver library
+
+
+2 steps:
+WebElement makeOfCar = driver.findElement(By.id("carPickerUsed_makerSelect"));
+Select make = new Select(makeOfCar);
+make.selectByVisibleText("Toyota");
+
+1 step:
+
+Select make = new Select(driver.findElement(By.id("carPickerUsed_makerSelect")));
+
+select by visible text:
+make.selectByVisibleText("Toyota");
+
+select by value:
+make.selectByValue("m7");
+
+select by index:
+make.selectByIndex(22)
+================================
+
+How to find out the selected option in drop down using Selenium?
+
+getFirstSelectedOption() method of Select class can be used to find the currently selected option.
+
+Select make = new Select(driver.findElement(By.id("carPickerUsed_makerSelect")));
+
+System.out.println(make.firstSelectedOption().getText());
+
+int count = Integer.parseInt(resultCount.getText());
+Assert.assertTrue(count > 0);
+
+assertTrue(boolean expression/value)
+assertion fails if boolean is FALSE
+assertion passes if boolean is TRUE
+
+Yasin Jason Akkaya — Today at 12:28 PM
+what is the difference between quit and close?
+
+driver.close(); -> closes current open browser.
+
+driver.quit(); -> closes all opened windows by webdriver, useful when there are multiple tabs.
+
+Real difference is seen when there are multiple windows. for single window, they work same way.
+
+add new class AmazonDepartmentNamesListTest
+
+add setUp method with @BeforeMethod annotation:
+	launch selenium, maximize, set timeout, navigate to amazon
+
+add @Test amazonDepartmentTest
+
+assert Amazon home page is displayed
+assert that "All" option is selected by default/automatically
+
+get All available options and print out
+========
+Assert.assertEquals(driver.getTitle(), expTitle);
+
+I want to skip typing the classname each time I need assertion:
+
+assertEquals(driver.getTitle(), expTitle);
+
+How can we do that?
+
+static import in java.
+
+on top of the class:
+import all static methods and variables from Assert class.
+import static org.testng.Assert.*;
+
+Once we add this line, we do not need to type class name Assert each time we need one of the methods.
+
+assertEquals(3,3);
+=======================
+
+READING ALL AVAILABLE OPTIONS FROM DROP DOWN LIST
+
+getOptions() method of Select class is used to read all available options in drop down.
+
+Select departments = new Select(driver.findElement(By.id("searchDropdownBox")));
+List<WebElement> allDepartments = departments.getOptions();
+
+getOptions() method returns a List of WebElement objects.
+We can get the size, or loop and read text etc with it.
+
+int countOfDepartments = allDepartments.size();
+
+for(WebElement d : allDepartments) {
+	System.out.println(d.getText());
+}
+
+---------------------
+
+When writing assertions, we can also include a message to display in the report when assertion fails.
+
+assertEquals(10, 5, "message to display in report when it fails");
+
+assertEquals(10, 5, "numbers are not equal");
+
+----------------------
+Taalaibek Tashkiul — Today at 2:34 PM
+Explain plz what is the difference between getOptions() and getFirstSelectionOption()
+
+getFirstSelectionOption() -> only return 1 value, which is the currently selected option of drop down list.
+
+
+getOptions() -> returns ALL available options in the drop down list.
+
+We can loop through the available options in the list using a loop or foreach method:
+
+//loop and print all available options
+for (WebElement dept : allDepartments) {
+    System.out.println(dept.getText());
+}
+
+System.out.println("==== USING FOREACH METHOD + LAMBDA EXPRESSION ===");
+allDepartments.forEach(dept -> System.out.println(dept.getText()));
+======================
+
+Lets say there are 5 testNG/junit tests a class.
+assertion fails at the first test.
+
+What will happen next?
+
+The rest of code in failed test will be skipped.
+TestNG will continue to other following tests.
+It will not skip the other tests if one of them fails.
+=======================
+
+
+@Test(enabled = false) //skip this test
+public void testDemo() {
+    System.out.println("testDemo is running");
+}
+
+enabled = false can be used to skip a test for any reason.
+=======================
+
+MULTI SELECT DROP DOWN.
+It means you can select more than 1 option from a list.
+
+add a new class MultiSelectDropDown
+
+add set up with url http://practice.cybertekschool.com/dropdown
+=====================================
+
+How do you work with drop downs in Selenium?
+
+I firstly locate the element using one of 8 locators, then create a Select class object.
+I can use selectByVisibleText, selectByValue, selectByIndex methods to select specific item in the list.
+
+If i want to read all available options, I use getOptions method that returns list of webelements for all options, then I can loop through do whatever.
+
+if i want to assert if certain value is selected successfully or check the default value, I use getFirstSelectedOption method in Select class and get the text then assert.
+=====================================
+
+WORKING WITH ALERTS IN SELENIUM:
+
+Alert is a pop up box, that we normally click yes, ok, or cancel etc.
+It will have some text, sometimes, we can even enter a value
+
+2 types of alerts that we can come across in Selenium.
+
+1) HTML alert, this type of alert is like normal html element, we locate it and we can click on Ok, or Cancel etc
+
+2) JavaScript alert, these are normally block the page, and we click on Ok, cancel, on it. You cannot inspect and locate it. We need to use a special Alert interface to handle these.
+
+Browser Pop-ups cannot be handled by selenium, these you will see normally when you want to save a file and the window with folder names are displayed. Selenium cannot handle those. We need some other library for these like Robot class
+----------------------------
+
+add new class HandlingAlertsTest
+
+
+3 types of Alerts in JavaScript:
+
+1) Information -> just OK/Accept button
+
+2) Confirmation
+3) Prompt, that accepts an input
+
+
+Alert interface is used to accept, dismiss java script alerts
+We need to swithTo().alert() first and assign to Alert interface type variable.
+
+Syntax:
+
+Alert alert = driver.switchTo().alert();
+alert.accept(); ok
+alert.dismiss(); cancel
+alert.getText(); return the text
+alert.sendKeys(); will type a value
