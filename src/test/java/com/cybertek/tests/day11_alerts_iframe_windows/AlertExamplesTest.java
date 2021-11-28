@@ -42,5 +42,27 @@ public class AlertExamplesTest {
         assertEquals(resultMsg.getText(), "You successfuly clicked an alert");
     }
 
+    @Test
+    public void confirmAlertTest() {
+        //click on JS Confirm button
+        WebElement jsConfirmBtn = driver.findElement(By.xpath("//button[.='Click for JS Confirm']"));
+        jsConfirmBtn.click();
+        //switch to alert then assert the text is "I am a JS Confirm"
+        Alert confirmAlert = driver.switchTo().alert();
+        System.out.println("Confirm alert text = " + confirmAlert.getText());
+        assertEquals(confirmAlert.getText(), "I am a JS Confirm");
+
+        //click on cancel
+        confirmAlert.dismiss();
+
+        //assert result message is "You clicked: Cancel"
+        WebElement resultMsg = driver.findElement(By.id("result"));
+        System.out.println("resultMsg.getText() = " + resultMsg.getText());
+        assertEquals(resultMsg.getText() , "You clicked: Cancel");
+
+    }
+
+
+
 
 }
