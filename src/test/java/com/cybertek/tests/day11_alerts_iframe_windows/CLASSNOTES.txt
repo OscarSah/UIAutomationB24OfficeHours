@@ -1,189 +1,251 @@
 
-11/28/2021
+10/17/2021 - Sunday
+
+Automation day 1.
+
+- review and some practice with html. so that we are ready for the quiz
+- Benefits of test automation
+- We will set up maven automation project
+- introduction to Selenium webdriver
+-----------------------------------------
+
+<h1 align="center"> Welcome to Our Restaurant </h1>
+
+h1 -> is tag name
+align -> property/attribute name
+center -> property/attribute value
+Welcome to Our Restaurant -> this is the text that will be visible on browser
+==========================================
+
+Benefits of test automation.
+
+Manual testing is time consuming and needs many human resources.
+Automation testing is fast, effient, easily repeatable, only needs automation engineers/SDETs.
+
+At the end of each Sprint or right before Production release, teams do regression testing. Where all previous existing functionalities of the applicaiton plus the newly added functionalities needs to re-tested.
+When manual testers perform regression testing, they might miss certain points or bugs, because humans get tired, distracted , bored etc.
+
+When automated tests run, they can run without human interaction and repeatedly run whenever we want it, day or night. it is more accurate, fast, and gives feedback or catches every minor or major defect.
+
+Companies invest on test automation so that they can save money on less manual testing, and faster regression testing, overall faster feedback on the quality of the application.
+--------
+
+Can we automate everything?
+No, not everything can be or should be automated, for example, application look and feel (colors, alighments etc) cannot be automated.
+Ad-hoc testing, where you just perform random actions on the application , needs to be done manually.
+
+Capchas that ask to select images cannot be automated. ets
+--------
+Before an functionality of the application is automated, we need to first manually test and ensure it is working as expected, only after that we automate that test. if functionality is broked or has defect, we do NOT automate defects/functionality with defects
+============
+
+There are many test automation tools in the market. Some are free and some are licensed. Free ones are Selenium, Protractor, WAtir, etc
+Paid ones: UFT from HP, Robot from IBM, TestComplete from Smartbear etc
+
+Selenium by far is the most popular automation tool
+It is used for front end test automation, it cannot do back end or api test automation.
+Selenium automates browsers, up to you, how you want to use this power.
+Selenium can work with many different programming languages, meaning , we need to tell selenium what to do using one of the programming languages.
+
+Java, Ruby, Python, C#, JavaScript/JS, PHP.
+Java + Selenium combination is the most popular in the world.
+
+Test automation is coding. We need to know programming language basics in order to write selenium test automation code.
+
+Thats why you guys learned java first then after that we are starting selenium.
+
+Selenium works with any popular operating system: windows, Mac, linux, unix.
+
+Limitation of selenium is it can only automate web application using the browser.
+It cannot automate desktop applications.
+
+Selenium is open source, companies do not pay anything for this tool, they just pay for the SDET/QA Automation engineer like you guys.
+
+-------
+
+When we say selenium, it is a combination of several tools in a suite.
+
+Selenium IDE -> it is firefox plugin, that works as record and playback format. Not used anymore, do not mention anywhere, especially in your resume or in interview.
+
+Selenium RC (Remote control) , it is merged to Webdriver now.
+
+Selenium WebDriver -> this is what we will be using and learning, and needed at work.
+
+Selenium Grid -> is used to run tests remotely in servers and in paralell format.
+
+If application under test (AUT) is developed using C# , can we still use java for test automation?
+
+Yes, we can, automation language and application development languages does nto have to match.
+================
+
+How does selenium webdriver work?
+
+There are 3 main parts of selenium automation.
+
+1) Our automation code
+2) Browser driver that takes our automation code and sends to browser
+3) Browser(Chrome, Firefox) it takes requests from the driver and performs actions.
+================
+
+Set up selenium project:
+	Create new maven project in intellij
+	We need to find pom.xml file and add our dependecies.
+	Dependencies can be looked up from mvnrepository.com
+	In mvnrepository , we look for libraries that we want to use in our automation project:
+	Java library -> it is a combination of java classes, that can be used in other projects. Java library normally is in JAR format
+	jar -> java archive.
+
+	For selenium webdriver:
+
+	<dependency>
+	    <groupId>org.seleniumhq.selenium</groupId>
+	    <artifactId>selenium-java</artifactId>
+	    <version>3.141.59</version>
+	</dependency>
+
+	For browser drivers:
+
+	<dependency>
+	    <groupId>io.github.bonigarcia</groupId>
+	    <artifactId>webdrivermanager</artifactId>
+	    <version>5.0.3</version>
+	</dependency>
+======================================
+
+Maven is build automation tool.
+It hepls us with multiple things:
+	1) Manage project dependencies.
+	2) Builing the project
+	3) Execution of automation tests
+	->maven project is different than java project
+	-> maven is BUILD AUTOMATION TOOL:
+		-creates folder structure
+		-compiles the classes
+		-helps create jar/war files to be deployed
+		-it automatically runs automated tests
+		-helps manage project dependencies in pom.xml file
+
+XML -> Extensible Markup Language, similar to HTML, it uses tags. open + close.
+All tags in xml are paired an need to be closed.
+
+pom.xml file is used to manage , add, remove dependencies for the project.
+
+FOLDER STRUCTURE:
+	-src
+		-main
+			-java
+		-test
+			-java
+
+main package/folder is used mostly by developers, so we can just delete it.
+src/test package/folder is used for automated tests.
+-----------
+
+//1) set up the browser driver
+WebDriverManager.chromedriver().setup();
+
+//Open browser
+WebDriver driver = new ChromeDriver();
+
+//navigate to tesla homepage
+driver.get("https://www.tesla.com");
+
+WebDriver methods:
+
+get(String url) -> it navigates to the given url.
+driver.get("https://www.tesla.com"); we need to add https:// part.
 ----------
 
-Sunday, Test Automation Day 11
-------------------------------
+-------
+How to close all chrome browsers:
 
-Handing Alerts/Pop-up windows in Selenium:
+In Mac:
+	- Command + Space
+	- type terminal  then enter
+	- in terminal type killall "Google Chrome" then enter
+In Windows:
+ 	-Goto left bottom corner and click on windowns icon:
+ 	-type powershell then select first option then open
+ 	-type killall "Google Chrome"
+ 	-click enter
+-----------------------------
+Navigatoin methods:
+	- get..
+	- navigate().back(); -> it is similar to clicking on back on the browser
+	driver.navigate().back();
+	- navigate().forward();
+		-> it is similar to clicking forward on the browser
+	driver.navigate().forward();
+	- navigate().refresh() -> refreshes the page
+	Similar to clicking on refresh icon on the browser
+	- navigate().to() -> it accepts url, and navigates to that url
 
-2 types of alerts you come across in applications
-
-1) Html alert
-2) Javascript alert
-
-
-Html alert -> is written using html tags and html language, so there is nothing special needed to work with them in Selenium:
-	-> you locate the pop up window using any locator then you can perform actions like click, sendkeys etc.
-	-> other elements are not normally blocked. Maybe patially it will block the page elements
-
-Lets say in your application, there pop up windown to ask to sign up with email shows at certain step:
-	WebElement cancel = driver.findElement(By.id("cancelbtn"));
-	cancel.click();
-
-JavaScript alert:
-	-> it is written using javascript language functions. And we need to approach it differently. We use Alert interface in Selenium WebDriver.
-
-	1) switch to the alert
-	2) perform one of actions: accept(); dismiss(); getText(); sendkeys();
-
-	Alert alert = driver.switchTo().alert();
-	alert.accept();
-	alert.dismiss();
-
-add package day11_alerts_iframe_windows
-
-add new class AlertExamplesTest
-
-add @BeforeMethod annotation and navigate to the url
-http://practice.cybertekschool.com/javascript_alerts
+	driver.navigate().to("https://www.etsy.com");
 
 
-3 Types of JS -> javascript. js alerts
-
-1) informational -> some text and Ok button
-
-js alerts are NOT so common in applications, but they come up depending on the project you are working on.
-
-2) Confirm alert -> it has some text and OK , Cancel buttons
- confirm() -> Ok
- dismiss() -> Cancel
- getText() -> to read the text of alert
+ Thread.sleep(2000); it is a java method, that makes code wait/sleep for given time amount. it accepts milliseconds.
 
 
-Below exception shows when we try to switch to alert, but it is not displayed:
+<title>Electric Cars, Solar &amp; Clean Energy | Tesla</title>
 
- org.openqa.selenium.NoAlertPresentException: no such alert
+- getTitle() method, reads the title of the current page and returns it.
 
-3) prompt alert -> it will have text, input field where we can type values, Ok, Cancel buttons.
+ex: System.out.println("current title: " + driver.getTitle());
 
-Switch to it first:
-	Alert alert = driver.switchTo().alert();
-	System.out.println(alert.getText());
-	alert.sendKeys("hello");
-	alert.comfirm();
+closing the browser:
+	- 2 ways to close the browser:
+		close() method
+		quit() method
+	driver.quit();
 
-===============================
+driver.navigate().to() vs driver.get()
 
-
-WORKING WITH FRAMES IN SELENIUM:
-
-IFrame -> Inline Frame: Is HTML inside HTML.
-
-Normally used to build re-usable page components and re-use it in different pages.
-If we change iframe code, it will affect every page that it was used for, so it is good for maintainability and reusablity.
-
-Examples: maps, calculator, weather widget etc
-
-------------------
-
-When doing automation using Selenium webdriver, if we want to locate an element which is inside the iframe, then we need to switch to it first, then we can locate the element.
-
-<html>
-	<head> </head>
-	<body>
-		<h1>Our location</h1>
-
-		<iframe id="map">
-			<html>
-				<body>
-					<a href="https://google.com">Google</a>
-				</body>
-			</html>
-		</iframe>
-
-	</body>
-</html>
-
-
-I want to click on Google link which is inside iframe.
-If i just do:
-	WebElement link = driver.findElement(By.linkText("Google"));
-	link.click();
-It will show NOSuchElement exception. why? because link is inside the iframe, we need to go there first then locate the link:
-
-driver.switchTo().frame("map");
-WebElement link = driver.findElement(By.linkText("Google"));
-link.click();
-
-Now our driver is focusing on the iframe, we can now locate the elements:
-
-----
-How do I go back to outside of the frame?
-
-driver.switchTo().defaultContent();
+driver.get() waits for the page to finish loading before going to next step
+driver.navigate().to() -> does not wait for the page to finish loading before going to next step
 ========================================
 
-Add new class IframesExampleText()
+HOW TO HANDLE MULTIPLE WINDOWS USING SELENIUM?
 
-add @BeforeMethod and navigate to http://practice.cybertekschool.com/iframe
+We can switch to a different window using switchTo().window() method and passing the window handle id.
 
-3 ways we can switch to iframe:
+-> Sometimes when we click on a link or button on the page, it will open a new page/tab.
+-> if you want selenium to focus on a different tab/window, we need to switch to it first. Selenium can only focus on single window/tab of the browser at a time.
+-> Each browser will have a unique window handle assigned to it, it is a long string with numbers and letters.
+-> For selenium window and a tab are same.
+-> we can use the unique window handle to switch to a different window.
 
-1) by id
-2) by index
-3) by using WebElement and findElement method
+String currentWindowHandleID = driver.getWindowHandle();
 
-<html>
-	<head> </head>
-	<body>
-		<h1>Our location</h1>
+currentWindowHandleID will contain handle id of current window.
 
-		<iframe id="map">
-			<html>
-				<body>
-					<a href="https://google.com">Google</a>
-				</body>
-			</html>
-		</iframe>
+If we want to read all the window handle ids, we can do following way:
 
-		<iframe id="comments">
-			<html>
-				<body>
-					///elems
-				</body>
-			</html>
-		</iframe>
+Set -> collection of unique values
 
-	</body>
-</html>
+driver.getWindowHandles() method returns Set of Strings
 
-1) by id or name -> if there is Id/name property, we can just pass it:
+Set<String> windows = driver.getWindowHandles();
+then loop it.
 
-	driver.switchTo().frame("comments");
+add new class MultipleWindowsExampleTest
 
-2) by index number, starts with 0:
-	driver.switchTo().frame(0); , it switches to first iframe
-	driver.switchTo().frame(1); it switches to second iframe
+=================
 
-3) By locating a iframe:
+What is window handle?
 
-	driver.switchTo().frame(driver.findElement(By.locator(....)));
+-> It is randomly generated String id for each window/tab
+-> Every window will have different window handle that is automatically generated
+-> We need to use window handle to switch a different window
 
-How to go out from frame?
+How to do we get current window handle?
 
-driver.switchTo().defaultContent();
-=======================================
+driver.getWindowHandle() method will return current one as a String
 
-Alerts
-iFrames
+How do you get all window handles?
+How do you find out the count of windows opened by selenium?
 
-HOW TO HANDLE NESTED FRAMES?
+driver.getWindowHandles() method and it will return window handle for each window.
+as a Set of String values.
 
-We need to First switch to parent frame using one of three ways, then I switch again to the child frame.
+I can get the count of the set and thats how i know the count of windows.
 
-=> name or id
-=> by index number
-=> by passing webElement
-
-driver.switchTo().frame("parent").switchTo().frame("child");
-
-Once you are in the frame, how to go back out?
-
-driver.switchTo().defaultContent();
-
-if driver is focused on child frame, we switch to parent frame first then to default content.
-
-driver.switchTo().parentFrame();
-driver.switchTo().defaultContent();
-============================
