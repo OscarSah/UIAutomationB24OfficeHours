@@ -62,6 +62,18 @@ public class AlertExamplesTest {
 
     }
 
+    @Test
+    public void promptAlertTest() {
+        //click on JS prompt button
+        WebElement jsPromptBtn = driver.findElement(By.xpath("//button[contains(text(), 'Prompt')]"));
+        jsPromptBtn.click();
+        //switch to alert and assert/confirm the text is "I am a JS prompt"
+
+        //enter "hello" and click on Ok
+        //assert "You entered: hello" message is displayed
+
+    }
+
 
 
 
