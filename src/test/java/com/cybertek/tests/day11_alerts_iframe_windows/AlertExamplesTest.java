@@ -1,10 +1,10 @@
 package com.cybertek.tests.day11_alerts_iframe_windows;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+
 import static org.testng.Assert.*;
+
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -23,6 +23,11 @@ public class AlertExamplesTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(url);
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
     }
 
     @Test
@@ -68,9 +73,17 @@ public class AlertExamplesTest {
         WebElement jsPromptBtn = driver.findElement(By.xpath("//button[contains(text(), 'Prompt')]"));
         jsPromptBtn.click();
         //switch to alert and assert/confirm the text is "I am a JS prompt"
+        Alert promptAlert = driver.switchTo().alert();
+        System.out.println("Alert text = " + promptAlert.getText());
+        assertEquals(promptAlert.getText(), "I am a JS prompt");
 
         //enter "hello" and click on Ok
+        promptAlert.sendKeys("hello");
+        promptAlert.accept();
+
         //assert "You entered: hello" message is displayed
+        WebElement resultMsg = driver.findElement(By.id("result"));
+        assertEquals(resultMsg.getText(), "You entered: hello");
 
     }
 
