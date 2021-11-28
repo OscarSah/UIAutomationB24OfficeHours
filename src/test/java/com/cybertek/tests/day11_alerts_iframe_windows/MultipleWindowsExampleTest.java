@@ -57,6 +57,29 @@ public class MultipleWindowsExampleTest {
     @Test
     public void demoQAMultipleWindows() {
         driver.get(demoQaUrl);
+        WebElement newTab = driver.findElement(By.id("tabButton"));
+        WebElement newWindow = driver.findElement(By.id("windowButton"));
+        WebElement newWindowWithMessage = driver.findElement(By.id("messageWindowButton"));
+
+        newTab.click();
+        newWindow.click();
+        newWindowWithMessage.click();
+
+        System.out.println("Title of main/parent page = " + driver.getTitle());
+
+        //Store parent window handle id in a variable:
+        String parentWindowHandle = driver.getWindowHandle();
+
+        //store all window handle ids in to a Set
+        Set<String> allWindowHandles = driver.getWindowHandles();
+        System.out.println("Total window count = " + allWindowHandles.size());
+
+        allWindowHandles.forEach(window -> {
+            System.out.println("Switching to " + window);
+            driver.switchTo().window(window);
+            System.out.println("Current window title = " + driver.getTitle());
+        });
+
 
     }
 

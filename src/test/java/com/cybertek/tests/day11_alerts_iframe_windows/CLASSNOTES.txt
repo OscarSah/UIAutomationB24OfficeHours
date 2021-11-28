@@ -249,3 +249,11 @@ as a Set of String values.
 
 I can get the count of the set and thats how i know the count of windows.
 
+
+alert
+iframe
+window
+
+switchTo() method
+
+============================
