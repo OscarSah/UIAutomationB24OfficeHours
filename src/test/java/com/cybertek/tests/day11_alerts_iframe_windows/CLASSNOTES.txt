@@ -158,9 +158,32 @@ add @BeforeMethod and navigate to http://practice.cybertekschool.com/iframe
 
 3) By locating a iframe:
 
-	driver.switchTo().frame(driver.findElement(By.xpath(....)));
+	driver.switchTo().frame(driver.findElement(By.locator(....)));
 
 How to go out from frame?
 
 driver.switchTo().defaultContent();
 =======================================
+
+Alerts
+iFrames
+
+HOW TO HANDLE NESTED FRAMES?
+
+We need to First switch to parent frame using one of three ways, then I switch again to the child frame.
+
+=> name or id
+=> by index number
+=> by passing webElement
+
+driver.switchTo().frame("parent").switchTo().frame("child");
+
+Once you are in the frame, how to go back out?
+
+driver.switchTo().defaultContent();
+
+if driver is focused on child frame, we switch to parent frame first then to default content.
+
+driver.switchTo().parentFrame();
+driver.switchTo().defaultContent();
+============================
