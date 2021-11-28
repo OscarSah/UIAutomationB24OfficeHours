@@ -1,4 +1,4 @@
-package com.cybertek.tests.day10_dropdown_alerts_iframes_windows;
+package com.cybertek.tests.day10_dropdown_alerts_intro;
 
 import static com.cybertek.utils.WebDriverFactory.*;
 
