@@ -77,8 +77,14 @@ public class MultipleWindowsExampleTest {
         allWindowHandles.forEach(window -> {
             System.out.println("Switching to " + window);
             driver.switchTo().window(window);
-            System.out.println("Current window title = " + driver.getTitle());
+           // System.out.println("Current window title = " + driver.getTitle());
         });
+
+//        for(String window : allWindowHandles) {
+//            System.out.println("Switching to " + window);
+//            driver.switchTo().window(window);
+//            //System.out.println("Current window title = " + driver.getTitle());
+//        }
 
 
     }
