@@ -1,0 +1,166 @@
+
+11/28/2021
+----------
+
+Sunday, Test Automation Day 11
+------------------------------
+
+Handing Alerts/Pop-up windows in Selenium:
+
+2 types of alerts you come across in applications
+
+1) Html alert
+2) Javascript alert
+
+
+Html alert -> is written using html tags and html language, so there is nothing special needed to work with them in Selenium:
+	-> you locate the pop up window using any locator then you can perform actions like click, sendkeys etc.
+	-> other elements are not normally blocked. Maybe patially it will block the page elements
+
+Lets say in your application, there pop up windown to ask to sign up with email shows at certain step:
+	WebElement cancel = driver.findElement(By.id("cancelbtn"));
+	cancel.click();
+
+JavaScript alert:
+	-> it is written using javascript language functions. And we need to approach it differently. We use Alert interface in Selenium WebDriver.
+
+	1) switch to the alert
+	2) perform one of actions: accept(); dismiss(); getText(); sendkeys();
+
+	Alert alert = driver.switchTo().alert();
+	alert.accept();
+	alert.dismiss();
+
+add package day11_alerts_iframe_windows
+
+add new class AlertExamplesTest
+
+add @BeforeMethod annotation and navigate to the url
+http://practice.cybertekschool.com/javascript_alerts
+
+
+3 Types of JS -> javascript. js alerts
+
+1) informational -> some text and Ok button
+
+js alerts are NOT so common in applications, but they come up depending on the project you are working on.
+
+2) Confirm alert -> it has some text and OK , Cancel buttons
+ confirm() -> Ok
+ dismiss() -> Cancel
+ getText() -> to read the text of alert
+
+
+Below exception shows when we try to switch to alert, but it is not displayed:
+
+ org.openqa.selenium.NoAlertPresentException: no such alert
+
+3) prompt alert -> it will have text, input field where we can type values, Ok, Cancel buttons.
+
+Switch to it first:
+	Alert alert = driver.switchTo().alert();
+	System.out.println(alert.getText());
+	alert.sendKeys("hello");
+	alert.comfirm();
+
+===============================
+
+
+WORKING WITH FRAMES IN SELENIUM:
+
+IFrame -> Inline Frame: Is HTML inside HTML.
+
+Normally used to build re-usable page components and re-use it in different pages.
+If we change iframe code, it will affect every page that it was used for, so it is good for maintainability and reusablity.
+
+Examples: maps, calculator, weather widget etc
+
+------------------
+
+When doing automation using Selenium webdriver, if we want to locate an element which is inside the iframe, then we need to switch to it first, then we can locate the element.
+
+<html>
+	<head> </head>
+	<body>
+		<h1>Our location</h1>
+
+		<iframe id="map">
+			<html>
+				<body>
+					<a href="https://google.com">Google</a>
+				</body>
+			</html>
+		</iframe>
+
+	</body>
+</html>
+
+
+I want to click on Google link which is inside iframe.
+If i just do:
+	WebElement link = driver.findElement(By.linkText("Google"));
+	link.click();
+It will show NOSuchElement exception. why? because link is inside the iframe, we need to go there first then locate the link:
+
+driver.switchTo().frame("map");
+WebElement link = driver.findElement(By.linkText("Google"));
+link.click();
+
+Now our driver is focusing on the iframe, we can now locate the elements:
+
+----
+How do I go back to outside of the frame?
+
+driver.switchTo().defaultContent();
+========================================
+
+Add new class IframesExampleText()
+
+add @BeforeMethod and navigate to http://practice.cybertekschool.com/iframe
+
+3 ways we can switch to iframe:
+
+1) by id
+2) by index
+3) by using WebElement and findElement method
+
+<html>
+	<head> </head>
+	<body>
+		<h1>Our location</h1>
+
+		<iframe id="map">
+			<html>
+				<body>
+					<a href="https://google.com">Google</a>
+				</body>
+			</html>
+		</iframe>
+
+		<iframe id="comments">
+			<html>
+				<body>
+					///elems
+				</body>
+			</html>
+		</iframe>
+
+	</body>
+</html>
+
+1) by id or name -> if there is Id/name property, we can just pass it:
+
+	driver.switchTo().frame("comments");
+
+2) by index number, starts with 0:
+	driver.switchTo().frame(0); , it switches to first iframe
+	driver.switchTo().frame(1); it switches to second iframe
+
+3) By locating a iframe:
+
+	driver.switchTo().frame(driver.findElement(By.xpath(....)));
+
+How to go out from frame?
+
+driver.switchTo().defaultContent();
+=======================================
