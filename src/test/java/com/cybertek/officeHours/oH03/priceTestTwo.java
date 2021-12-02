@@ -35,8 +35,12 @@ public class priceTestTwo {
     public static void getLink(String str){                  // we can not call instance variable from static
         driver.findElement(By.partialLinkText(str)).click(); // we made the webdriver static
     }
+/*
+    public static int addProduct(String category, String product){
 
-
+        return
+    }
+*/
 /*
 - From Categories select Laptops, and from products select Sony Vaio i7
  - click Add to Cart then handle pop up
