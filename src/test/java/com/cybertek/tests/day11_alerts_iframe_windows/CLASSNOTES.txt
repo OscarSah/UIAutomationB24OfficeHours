@@ -1,0 +1,251 @@
+
+11/28/2021
+----------
+
+Sunday, Test Automation Day 11
+------------------------------
+
+Handing Alerts/Pop-up windows in Selenium:
+
+2 types of alerts you come across in applications
+
+1) Html alert
+2) Javascript alert
+
+
+Html alert -> is written using html tags and html language, so there is nothing special needed to work with them in Selenium:
+	-> you locate the pop up window using any locator then you can perform actions like click, sendkeys etc.
+	-> other elements are not normally blocked. Maybe patially it will block the page elements
+
+Lets say in your application, there pop up windown to ask to sign up with email shows at certain step:
+	WebElement cancel = driver.findElement(By.id("cancelbtn"));
+	cancel.click();
+
+JavaScript alert:
+	-> it is written using javascript language functions. And we need to approach it differently. We use Alert interface in Selenium WebDriver.
+
+	1) switch to the alert
+	2) perform one of actions: accept(); dismiss(); getText(); sendkeys();
+
+	Alert alert = driver.switchTo().alert();
+	alert.accept();
+	alert.dismiss();
+
+add package day11_alerts_iframe_windows
+
+add new class AlertExamplesTest
+
+add @BeforeMethod annotation and navigate to the url
+http://practice.cybertekschool.com/javascript_alerts
+
+
+3 Types of JS -> javascript. js alerts
+
+1) informational -> some text and Ok button
+
+js alerts are NOT so common in applications, but they come up depending on the project you are working on.
+
+2) Confirm alert -> it has some text and OK , Cancel buttons
+ confirm() -> Ok
+ dismiss() -> Cancel
+ getText() -> to read the text of alert
+
+
+Below exception shows when we try to switch to alert, but it is not displayed:
+
+ org.openqa.selenium.NoAlertPresentException: no such alert
+
+3) prompt alert -> it will have text, input field where we can type values, Ok, Cancel buttons.
+
+Switch to it first:
+	Alert alert = driver.switchTo().alert();
+	System.out.println(alert.getText());
+	alert.sendKeys("hello");
+	alert.comfirm();
+
+===============================
+
+
+WORKING WITH FRAMES IN SELENIUM:
+
+IFrame -> Inline Frame: Is HTML inside HTML.
+
+Normally used to build re-usable page components and re-use it in different pages.
+If we change iframe code, it will affect every page that it was used for, so it is good for maintainability and reusablity.
+
+Examples: maps, calculator, weather widget etc
+
+------------------
+
+When doing automation using Selenium webdriver, if we want to locate an element which is inside the iframe, then we need to switch to it first, then we can locate the element.
+
+<html>
+	<head> </head>
+	<body>
+		<h1>Our location</h1>
+
+		<iframe id="map">
+			<html>
+				<body>
+					<a href="https://google.com">Google</a>
+				</body>
+			</html>
+		</iframe>
+
+	</body>
+</html>
+
+
+I want to click on Google link which is inside iframe.
+If i just do:
+	WebElement link = driver.findElement(By.linkText("Google"));
+	link.click();
+It will show NOSuchElement exception. why? because link is inside the iframe, we need to go there first then locate the link:
+
+driver.switchTo().frame("map");
+WebElement link = driver.findElement(By.linkText("Google"));
+link.click();
+
+Now our driver is focusing on the iframe, we can now locate the elements:
+
+----
+How do I go back to outside of the frame?
+
+driver.switchTo().defaultContent();
+========================================
+
+Add new class IframesExampleText()
+
+add @BeforeMethod and navigate to http://practice.cybertekschool.com/iframe
+
+3 ways we can switch to iframe:
+
+1) by id
+2) by index
+3) by using WebElement and findElement method
+
+<html>
+	<head> </head>
+	<body>
+		<h1>Our location</h1>
+
+		<iframe id="map">
+			<html>
+				<body>
+					<a href="https://google.com">Google</a>
+				</body>
+			</html>
+		</iframe>
+
+		<iframe id="comments">
+			<html>
+				<body>
+					///elems
+				</body>
+			</html>
+		</iframe>
+
+	</body>
+</html>
+
+1) by id or name -> if there is Id/name property, we can just pass it:
+
+	driver.switchTo().frame("comments");
+
+2) by index number, starts with 0:
+	driver.switchTo().frame(0); , it switches to first iframe
+	driver.switchTo().frame(1); it switches to second iframe
+
+3) By locating a iframe:
+
+	driver.switchTo().frame(driver.findElement(By.locator(....)));
+
+How to go out from frame?
+
+driver.switchTo().defaultContent();
+=======================================
+
+Alerts
+iFrames
+
+HOW TO HANDLE NESTED FRAMES?
+
+We need to First switch to parent frame using one of three ways, then I switch again to the child frame.
+
+=> name or id
+=> by index number
+=> by passing webElement
+
+driver.switchTo().frame("parent").switchTo().frame("child");
+
+Once you are in the frame, how to go back out?
+
+driver.switchTo().defaultContent();
+
+if driver is focused on child frame, we switch to parent frame first then to default content.
+
+driver.switchTo().parentFrame();
+driver.switchTo().defaultContent();
+============================
+
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3103.723229231549!2d-77.22028298464868!3d38.93030307956556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b64abfe10efdab%3A0x8b0b92184f4872f3!2sCybertek%20School!5e0!3m2!1sen!2sus!4v1638130709568!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+</iframe>
+
+
+HOW TO HANDLE MULTIPLE WINDOWS USING SELENIUM?
+
+We can switch to a different window using switchTo().window() method and passing the window handle id.
+
+-> Sometimes when we click on a link or button on the page, it will open a new page/tab. 
+-> if you want selenium to focus on a different tab/window, we need to switch to it first. Selenium can only focus on single window/tab of the browser at a time.
+-> Each browser will have a unique window handle assigned to it, it is a long string with numbers and letters.
+-> For selenium window and a tab are same.
+-> we can use the unique window handle to switch to a different window.
+
+String currentWindowHandleID = driver.getWindowHandle();
+
+currentWindowHandleID will contain handle id of current window.
+
+If we want to read all the window handle ids, we can do following way:
+
+Set -> collection of unique values
+
+driver.getWindowHandles() method returns Set of Strings
+
+Set<String> windows = driver.getWindowHandles();
+then loop it.
+
+add new class MultipleWindowsExampleTest
+
+=================
+
+What is window handle?
+
+-> It is randomly generated String id for each window/tab
+-> Every window will have different window handle that is automatically generated
+-> We need to use window handle to switch a different window
+
+How to do we get current window handle?
+
+driver.getWindowHandle() method will return current one as a String
+
+How do you get all window handles?
+How do you find out the count of windows opened by selenium?
+
+driver.getWindowHandles() method and it will return window handle for each window.
+as a Set of String values.
+
+I can get the count of the set and thats how i know the count of windows.
+
+
+alert
+iframe
+window
+
+switchTo() method
+
+============================
+
+
+
