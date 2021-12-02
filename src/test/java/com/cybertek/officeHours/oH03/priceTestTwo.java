@@ -1,8 +1,10 @@
 package com.cybertek.officeHours.oH03;
 
 import com.cybertek.utils.WebDriverFactory;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,8 +12,11 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 public class priceTestTwo {
+
     static WebDriver driver;
     String url = "https://www.demoblaze.com/index.html#";
+    int expectedTotalPrice = 0;
+
     @BeforeMethod
     public void setUp() {
         driver = WebDriverFactory.getDriver("chrome");
@@ -48,11 +53,34 @@ public class priceTestTwo {
         getLink("Laptops");
         getLink("Sony vaio i7");
         Thread.sleep(2000);
+        WebElement priceContainer = driver.findElement(By.xpath("//h3"));
+        // I need a variable that will hold all the prices that I am adding
 
+        expectedTotalPrice += Integer.parseInt(priceContainer.getText().substring(1,4));
 
+        System.out.println("expectedTotalPrice = " + expectedTotalPrice);
 
+        getLink("Add to cart");
+        Thread.sleep(1000);
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
 
+        getLink("Home");
 
+        getLink("Phones");
+        getLink("Iphone 6 32gb");
+        Thread.sleep(2000);
+        priceContainer = driver.findElement(By.xpath("//h3"));
+        // I need a variable that will hold all the prices that I am adding
+
+        expectedTotalPrice += Integer.parseInt(priceContainer.getText().substring(1,4));
+
+        System.out.println("expectedTotalPrice = " + expectedTotalPrice);
+
+        getLink("Add to cart");
+
+        Thread.sleep(1000);
+        alert.accept();
 
     }
 
