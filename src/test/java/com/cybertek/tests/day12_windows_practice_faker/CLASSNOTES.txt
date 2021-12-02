@@ -1,1 +1,273 @@
 
+
+12/01/2021
+----------
+
+Test Automation day 12
+----------------------
+
+Review:
+	
+	Drop downs in Selenium:
+	-> Select drop down -> this is built using  <select> and <option> tags in Html.
+	We use Select class to handle select drop downs.
+	-> Sometimes you can come access some elements that look like drop down but it is not using select/options tags. For those kind of drop downs we cannot use Select class. You just directly locate the element and perform actions.
+
+	Select dropdowns:
+		Select class in Selenium library.
+		Syntax:
+		Select select = new Select(driver.findElement(By.name("month")));
+
+		WebElement month = driver.findElement(By.name("month"));
+		Select select = new Select(month);
+
+	Then to select an option from drop down:
+		-> select.selectByVisibleText("December");
+		-> select.selectByIndex(12);
+		-> select.selectByValue("dec");
+
+	How to know what is currently selected? :
+		String currentValue = select.getFirstSelectedOption().getText();
+
+	How to read all available options in select drop down? :
+
+	List<WebElement> allOptions = select.getOptions();
+	System.out.println(allOptions.size());
+	for(WebElement m : allOptions) {
+		System.out.println(m.getText());
+	}
+============================================
+Checkbox and Radio:
+	We locate them and click() on them to check or uncheck.
+
+	WebElement remember = driver.findElement(By.id("rem"));
+	Check it if its not already checked:
+
+	if(!remember.isSelected()) {
+		remember.click();
+	}
+========================
+
+Alerts/Pop ups in Selenium:
+
+How do you handle alerts/pop-ups using selenium?
+
+We use Alert interface to handle alerts using selenium.
+We switchTo alert first then able to perform accept(), dismiss(), getText(), sendKeys()
+
+Alert alert = driver.switchTo().alert();
+System.out.println(alert.getText());
+alert.accept(); clicking on Ok button
+...
+alert.dismiss(); clicking on Cancel button
+---------------
+
+Sometimes we come accross Html pop-ups, they are not javascript alerts, so we just locate them and perform actions normally.
+
+We can use Alert interface only on Javascript alerts.
+	-> Informational alerts -> with a message and just Ok button
+	-> Confirmation alerts -> with a message and Ok / Cancel buttons
+	-> Promp alerts -> message , input field, Ok/Cancel buttons
+=================================
+
+How to handle iFrames in Selenium?
+
+iFrames are basically html document code inside html code. In Front end, they are used for components reusability.
+
+In order to be able to perform action on a web element inside the iframe, we need to first SWITCH TO IT.
+
+1) Switching using id or name property. We just pass id/name if iframe as a String. we are assuming that "map" is id/name property.
+
+driver.switchTo().frame("map"); 
+
+2) Switching by index, when we have 1 or more iframes, we can use index number. 
+
+driver.switchTo().frame(0); 
+
+3) Switching using WebElement. First we locate the iframe using findElement method and one of 8 locators and switch to it.
+
+WebElement myIFrame = driver.findElement(By.xpath("//iframe[@class='ws']"));
+
+driver.switchTo().frame(myIFrame);
+ 
+ OR
+
+driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@class='ws']")));
+
+-----------
+
+How to go out from iframe?
+
+driver.switchTo().defaultContent();
+
+So when we switch to a frame, webdriver focuses only on the elements inside that iframe, so in order to perform actions on elements that are outside the iframe, we need to go back out from iframe.
+
+------------
+
+How do you handle nested iframes?
+
+<html>
+	<iframe id="parent">
+			<iframe id="child1">
+				
+			</iframe>
+			<iframe id="child2">
+				
+			</iframe>
+	</iframe>
+</html>
+
+Lets say we need to switch to child1 iframe?
+
+We will need to switch to parent iframe first then to child iframe.
+
+driver.switchTo().frame("child1") --> WILL NOT WORK. 
+
+driver.switchTo().frame("parent").switchTo().frame("child1");
+
+Now webdriver is focused on child1 iframe.
+-------------------
+
+To get out from nested frame to main content. we need to first goto parent frame then goto main/default content.
+
+
+driver.switchTo().parentFrame();
+driver.switchTo().defaultContent();
+
+--------------------
+
+Handling Multiple Windows Using Selenium WebDriver?
+
+-> Each tab or window is considered to be a separate window for selenium.
+-> If a new window opens when selenium is running, we need to SWITCH to it to perform actions on the elements in the new window.
+-> Each window is assigned unique WINDOW HANDLE ID. it is a random value consisting of numbers and letters.
+-> So selenium NEEDS WINDOW HANDLE ID to be able to switch to a different window.
+
+EX:
+	
+	String mainWindow = driver.getWindowHandle();
+	mainWindow variable will have the window handle id of the parent window. We might need this value if we want to switch back to main window later.
+
+	How to switch to another window?
+
+	driver.getWindowHandles() method is used to capture/get windle handles of all opened windows by selenium. it is in the form of Set of Strings.
+
+	Set<String> windowHandles = driver.getWindowHandles();
+
+	Once we have all the window handle ids, we can now loop through it.
+	Since it is a Set data structure, we cannot use get method with index, and there is no guarantee that order is correct.
+
+	FOR EACH LOOP:
+
+	Set<String> windowHandles = driver.getWindowHandles();
+
+	for(String windowH : windowHandles) {
+		driver.switchTo().window(windowH);
+		System.out.println(driver.getTitle());
+		
+		if(driver.getTitle().contains("Etsy")) {
+			break; //exit loop
+		}
+	}
+
+-----
+	String mainWindow = driver.getWindowHandle();
+	Set<String> windowHandles = driver.getWindowHandles();
+
+	for(String windowH : windowHandles) {
+		if(!windowH.equals(mainWindow)) {
+			driver.switchTo().window(windowH);
+		}
+	}
+
+	At this point driver is on another window.
+
+	To go back to parent/main window. I can use the variable mainWindow from above:
+
+	driver.switchTo().window(mainWindow);
+
+----------
+
+	Count of opened windows?
+
+	easy -> 
+	Set<String> windowHandles = driver.getWindowHandles();
+		windowHandles.size();
+
+	int windowsCount = driver.getWindowHandles().size();
+
+	assertEquals(windowsCount , 2); //WHEN FAILS: expected 2 but was 1
+	
+	assertTrue(count==2 );//WHEN FAILS:expected true but was false
+--------------
+
+assertEquals(windowsCount , 2 , "message to show when fails");
+assertTrue(count==2 , "message to show when fails" );
+--------------
+
+add new package day12_windows_practice_faker
+
+When you join your new job that will have a project. You will be added to Github enterprise as a user and will be provided with Repository urls that you will need to work with.
+
+https://github.com/murodil-cybertek/seleniumProjectB24
+
+you need to clone the project to our local machine.
+
+You will be assigned a unique user id and password.
+Same userid and password will be used to login to your laptop/ jira/ github ... etc. 
+
+---------------
+add new package day12_windows_practice_faker
+class DemoQAMultipleWindowsTest
+
+---------------
+
+<button id="windowButton" type="button" class="mt-4 btn btn-primary">New Window</button>
+
+CSS for element using id property:
+	button[id='windowButton']
+
+	#windowButton
+
+# -> is ID in css selector.
+
+#windowButton -> means look for element that has ID="windowButton".
+
+#hello -> element with id="hello"
+
+----------------------
+
+<button id="windowButton" type="button" class="mt-4 btn btn-primary">New Window</button>
+
+lets say we want to locate by css and class name.
+
+button[class='mt-4 btn btn-primary']
+
+OR we can:
+
+.mt-4 btn btn-primary
+. -> stands for classname in css
+.hello -> means element with class="hello"
+---------------------
+
+driver.close(); // close currently active window
+
+driver.quit(); // closes all opened windows in same session
+
+---------------------
+
+Add new dependency to pom.xml
+
+Java Faker -> library that is used to generate random fake test data.
+
+like names, addresses, emails, card numbers etc.
+
+----------------
+
+Test data -> is an input values that we need to perform the test on the application. It can be first name, last name, address, email, city names , zip codes etc etc.
+
+In some projects, you will be given the test data to use with your test cases.Mostly credentials, and urls.
+
+ In some flows of application, you might need random mock test data to use as inputs. We can use library like java faker for that. or there are more advanced test data generator libraries as well. like https://www.mockaroo.com etc.
+========================================
+
