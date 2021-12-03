@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,7 +20,7 @@ public class RegistrationFormTest extends RegistrationFormTestBase {
     Faker faker = new Faker();
 
     @Test
-    public void formTest() {
+    public void formTest() throws InterruptedException {
         WebElement firstName = driver.findElement(By.name("firstname"));
         firstName.sendKeys(faker.name().firstName());
 
@@ -57,6 +58,16 @@ public class RegistrationFormTest extends RegistrationFormTestBase {
         for(WebElement eachLang : languages) {
             eachLang.click();
         }
+
+        WebElement signUp = driver.findElement(By.id("wooden_spoon"));
+        signUp.click();
+
+        Thread.sleep(2000);
+
+        //verify "Well done!" message is displayed
+        WebElement heading = driver.findElement(By.className("alert-heading"));
+        Assert.assertEquals(heading.getText(), "Well done!");
+        Assert.assertTrue(heading.isDisplayed());
 
     }
 
