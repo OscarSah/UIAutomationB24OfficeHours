@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.cybertek.utils.WebDriverFactory.getDriver;
@@ -37,7 +38,8 @@ public class RegistrationFormTest extends RegistrationFormTestBase {
         mobile.sendKeys(faker.phoneNumber().cellPhone()
                 .replace("(" , "")
                 .replace(")" , "")
-                .replace(".", "-"));
+                .replace("." , "-")
+                .replace(" " , "-"));
 
         WebElement maleRadio = driver.findElement(By.xpath("//*[@value='male']"));
         maleRadio.click();
@@ -50,6 +52,11 @@ public class RegistrationFormTest extends RegistrationFormTestBase {
 
         Select jobTitle = new Select(driver.findElement(By.name("job_title")));
         jobTitle.selectByIndex(faker.number().numberBetween(1, 8));
+
+        List<WebElement> languages = driver.findElements(By.xpath("//input[@type='checkbox']"));
+        for(WebElement eachLang : languages) {
+            eachLang.click();
+        }
 
     }
 
