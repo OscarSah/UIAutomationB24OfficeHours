@@ -69,6 +69,7 @@ public class RegistrationFormTest extends RegistrationFormTestBase {
         Assert.assertEquals(heading.getText(), "Well done!");
         Assert.assertTrue(heading.isDisplayed());
 
+
     }
 
     public void enterUserName(String userName) {
