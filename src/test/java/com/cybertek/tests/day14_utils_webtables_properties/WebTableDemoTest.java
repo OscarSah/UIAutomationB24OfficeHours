@@ -70,8 +70,24 @@ public class WebTableDemoTest {
         for( WebElement e : emails) {
             System.out.println(e.getText());
         }
-
     }
+
+    @Test
+    public void printAllTableDataTest() {
+        //get rows count and assign to rowsCount variable and print it
+        int rowsCount = driver.findElements(By.xpath("//table[@id='table1']/tbody/tr")).size();
+        System.out.println("rowsCount = " + rowsCount);
+        
+        for (int r = 1; r <= rowsCount; r++) {
+            for(int c = 1; c <= 6; c++) {
+                String value = driver.findElement(By.xpath("//table[@id='table1']/tbody/tr["+r+"]/td["+c+"]")).getText();
+                System.out.println("value = " + value);
+            }
+        }
+        
+    }
+
+
 
 
     public String getCellData(int row, int col) {
