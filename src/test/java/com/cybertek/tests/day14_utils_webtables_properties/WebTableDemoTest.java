@@ -49,8 +49,36 @@ public class WebTableDemoTest {
         String xpathStr = "//table[@id='table1']/tbody/tr[1]/td[1]";
         WebElement firstRowCell = driver.findElement(By.xpath(xpathStr));
         System.out.println("firstRowCell.getText() = " + firstRowCell.getText());
-        
+
+        System.out.println("row 4 , col 1 = " + getCellData( 1, 4));
+        System.out.println("row 3 , col 3 = " + getCellData(3, 3));
     }
+
+    @Test
+    public void getAllColumnData() {
+        //print all names
+        //print all emails
+        List<WebElement> names = driver.findElements(By.xpath("//table[@id='table1']/tbody/tr/td[2]"));
+        List<WebElement> emails = driver.findElements(By.xpath("//table[@id='table1']/tbody/tr/td[3]"));
+
+        System.out.println("--- ALL FIRST NAMES ---");
+        for(int i = 0; i < names.size(); i++) {
+            System.out.println(i+1 + " - " + names.get(i).getText() + " " + emails.get(i).getText());
+        }
+
+        System.out.println("--- ALL EMAILS ---");
+        for( WebElement e : emails) {
+            System.out.println(e.getText());
+        }
+
+    }
+
+
+    public String getCellData(int row, int col) {
+        String xpathStr = "//table[@id='table1']/tbody/tr["+row+"]/td["+col+"]";
+        return driver.findElement(By.xpath(xpathStr)).getText();
+    }
+
 
 
 }
