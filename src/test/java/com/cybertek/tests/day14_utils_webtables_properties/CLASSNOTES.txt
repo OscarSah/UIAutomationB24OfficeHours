@@ -208,5 +208,62 @@ XPATH EXAMPLES:
 	//table[@id='friends']/tbody/tr[2]/td[2]
 =================================================
 
-BREAK TILL 2:15 PM EST
+add new class WebTableDemoTest
+
+
+
+//table[@id='table1']/thead/tr/th
+
+The above xpath will match all 6 column name cells individually.
+We can use this xpath with findElements method and store all 6 cells into a List.
+Then we can loop through"
+
+List<WebElement> colNamesList = driver.findElements(By.xpath("//table[@id='table1']/thead/tr/th"));
+
+System.out.println(colNamesList.size()); 6
+
+getCellData(int rowNum, int colNum)
+----------------------------
+
+//table[@id='table1']/tbody/tr/td[2]
+
+Goto table with id table1
+goto tbody
+goto all available rows / tr
+goto all cell 2 / td[2] for all the rows
+----------------------------
+
+Xpath to find out number of rows in a table:
+
+//table[@id='table1']/tbody/tr
+
+goto table 1
+goto tbody
+goto all rows / tr
+=============================
+
+going to a sibling in Xpath:
+
+//table[@id='table1']//td[.='John']/following-sibling::td[1]
+
+//table[@id='table1']//td[.='John']/preceding-sibling::td
+
+
+following-sibling:: and preceding-sibling:: are used to switch to next or previous sibling elements.
+
+//table[@id='table1']//td[.='John']/following-sibling::td[1]
+
+//table[@id='table1']//td[.='John'] => find a CELL that contains "John"
+/following-sibling::td[1] => goto next sibling element that has tag TD and index 1.
+
+//table[@id='table1']//td[.='John']/preceding-sibling::td
+
+/preceding-sibling::td => goto previous sibling.
+--------------------------------
+//table[@id='table1']//td[.='Doe']/following-sibling::td[3]
+//table[@id='table1']//td[.='Doe']/../td[4]
+
+/.. -> goto parent
+/following-sibling:: -> goto next sibling(s)
+================================
 
