@@ -1,0 +1,212 @@
+
+12/04/2021
+----------
+
+Test Automation Day 14
+----------------------
+
+WebOrder util
+Webtables
+properties file
+----------------------
+
+add package day14_utils_webtables_properties
+add new class SmartBearUtils in utils folder/package
+
+
+Utils package is normally available in any java project. In that package/folder we store utility classes with reusable methods.
+
+Purpose: Re-usablity of code. Avoid DRY situation. Dont reapeat yourself. Avoid code duplication.
+-> general idea: if you repeat some steps twice - it means you need some utility/reusable method for that.
+-> makes coding more efficient, because you can just call the methods and dont need to type again.
+-> makes your code more readable, if methods are names properly, even non-technical team members will be able to read and understand the flow of the code.
+-> maintainability -> can update code in one place and affects everywhere it is called.
+
+We write different levels of utility classes:
+	-> General utility classes: some of them are general utilities that work in any automation project.
+		ex:
+			-> WebDriverFactory.getDriver(String browserType)
+				-> it works with any project, not depending on specific application.
+			-> StringUtils.reverseString(String str);
+				-> this is very general util class that works in any project
+		- we can have many java specific or selenium specific utility classes like that. Good thing about them is once you write in one project, you can carry it to another project/job.
+	-> Application specific utility classes:
+		- these are written specifically for an application and cannot be used with other projects.
+			Ex: SmartBearUtils.loginToSmartBear()
+				-> the above utility works with only smartbear application - the steps inside use smartbear locators and credentials.
+======================================================================
+
+Kamila Salehova — Today at 11:27 AM
+@Murodil  SmartBearsUtils is not a child,  how it uses Driver?
+
+ SmartBearUtils.loginToSmartBear(driver);
+
+public class SmartBearUtils {
+    public static void loginToSmartBear(WebDriver driver) {
+        WebElement userName = driver.findElement(By.name("ctl00$MainContent$username"));
+        WebElement password = driver.findElement(By.name("ctl00$MainContent$password"));
+        WebElement loginBtn = driver.findElement(By.name("ctl00$MainContent$login_button"));
+
+        userName.sendKeys("Tester");
+        password.sendKeys("test");
+        loginBtn.click();
+
+        Assert.assertEquals(driver.getTitle() , "Web Orders", "Failed to login to smartbear app");
+    }
+}
+
+
+We are passing WebDriver OBJECT to the loginToSmartBear method. When we do so, the SAME browser that was opened in the test is PASSED to loginToSmartBear method.
+
+loginToSmartBear method has a parameter that accepts a WebDriver object. so we are simply passing it.
+
+@Test
+public void loginTest() {
+	WebDriver driver = new ChromeDriver();
+	driver.get(loginpage url);
+
+	SmartBearUtils.loginToSmartBear(driver);
+	SmartBearUtils.viewAllProducts(driver);
+}
+=================================
+
+Adding a WebDriver driver as a method parameter.
+
+This is a common way of writing selenium automation re-usable methods.
+
+EX:
+
+EtsyUtils {
+	login
+	search
+	select
+}
+
+For the above methods of EtsyUtils class, they need a webdriver to be able to perform the steps. so we can add webdriver as a paramenter to the methods:
+
+
+EtsyUtils {
+	login(WebDriver driver){
+		driver.findElem....
+	}
+	search(WebDriver driver, String item) {
+		driver.findElem....
+	}
+	select(WebDriver driver, int index) {
+		driver.findElem....
+	}
+}
+
+@Test
+public void etsyTest() {
+	WebDriver driver = new ChromeDriver();
+	driver.get(etsy url);
+
+	EtsyUtils.login(driver);
+	EtsyUtils.search(driver, "wooden spoon");
+	EtsyUtils.select(driver, 1);
+}
+===============================================
+
+HANDLING WEB TABLES USING SELENIUM:
+
+WebTables in HTML are used to display data using rows and columns and cells.
+Similar to excel worksheet.
+
+In html, we use following tags when working with webtables:
+
+<table> -> tag for whole table
+<thead> -> tag for table header / column names
+<tbody> -> tag for table body
+<tr> -> tag for table row
+<td> -> tag for table data/cell
+<th> -> tag for table header / column name, shows in bold
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table id="friends" border="1">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>City</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>Devran</td>
+			<td>New York City</td>
+		</tr>
+
+		<tr>
+			<td>Huseyin</td>
+			<td>Indianapolis</td>
+		</tr>
+
+		<tr>
+			<td>Irina</td>
+			<td>Chicago</td>
+		</tr>
+	</tbody>
+</table>
+
+</body>
+</html>
+
+
+Webtables are commonly used on web pages to dislay data in column row format.
+Data will come from Application Database and number of rows will depend on the data being displayed in browser.
+
+In Test automation, we normally need to READ data from WEBTABLES then ASSERT if data is matching expected values.
+
+We use mainly xpath for handling Webtables and reading values from rows/columns.
+
+========================
+
+XPATH EXAMPLES:
+
+	Xpath to locate whole table:
+
+	//table[@id='friends']
+
+	Xpath to locate column/header names:
+	Below xpath will locate whole row that contains column names.
+
+	//table[@id='friends']/thead/tr
+
+
+	Xpath to locate first column name:
+	//table[@id='friends']/thead/tr/th[1]
+
+	OR we can make it shorter:
+
+	//table[@id='friends']//th[1]
+------------------------------------------------
+
+	Xpath to locate all data rows in the table:
+
+	//table[@id='friends']/tbody/tr
+
+	We can use above xpath with findElements method to get List<WebElement> that represents all data rows in the table.
+
+-----------------------------------------------
+	Xpath that matches first row and first column value/cell.
+
+	//table[@id='friends']/tbody/tr[1]/td[1]
+
+	tr[1] -> give me the first row
+	td[1] -> give me the first column/cell
+
+	Xpath that matches second row and second cell:
+
+	//table[@id='friends']/tbody/tr[2]/td[2]
+=================================================
+
+BREAK TILL 2:15 PM EST
+
