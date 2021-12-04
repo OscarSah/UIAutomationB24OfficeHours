@@ -77,24 +77,33 @@ public class WebTableDemoTest {
         //get rows count and assign to rowsCount variable and print it
         int rowsCount = driver.findElements(By.xpath("//table[@id='table1']/tbody/tr")).size();
         System.out.println("rowsCount = " + rowsCount);
-        
+
         for (int r = 1; r <= rowsCount; r++) {
             for(int c = 1; c <= 6; c++) {
-                String value = driver.findElement(By.xpath("//table[@id='table1']/tbody/tr["+r+"]/td["+c+"]")).getText();
+                //String value = driver.findElement(By.xpath("//table[@id='table1']/tbody/tr["+r+"]/td["+c+"]")).getText();
+                String value = getCellData(r, c);
                 System.out.println("value = " + value);
             }
         }
-        
+
+        /**
+         table data => 2 d array => String[][] data
+         table data => list of maps => List<Map<String, String> data
+         table data => list of Customer objects => List<Customer> data
+         */
     }
 
+    @Test
+    public void readNeighborCell() {
+        WebElement johnEmail = driver.findElement(By.xpath("//table[@id='table1']//td[.='John']/following-sibling::td[1]"));
+        System.out.println("John's email = " + johnEmail.getText());
 
-
+        WebElement johnsLastName = driver.findElement(By.xpath("//table[@id='table1']//td[.='John']/preceding-sibling::td[1]"));
+        System.out.println("John' last name = " + johnsLastName.getText());
+    }
 
     public String getCellData(int row, int col) {
         String xpathStr = "//table[@id='table1']/tbody/tr["+row+"]/td["+col+"]";
         return driver.findElement(By.xpath(xpathStr)).getText();
     }
-
-
-
 }
