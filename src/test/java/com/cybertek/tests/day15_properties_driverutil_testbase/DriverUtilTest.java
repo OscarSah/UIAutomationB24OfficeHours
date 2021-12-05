@@ -7,6 +7,8 @@ public class DriverUtilTest {
     @Test
     public void driverClassTest() {
         Driver.getDriver().get("https://www.google.com");
+        System.out.println(Driver.getDriver().getTitle());
+
         Driver.getDriver().get("https://www.amazon.com");
         Driver.getDriver().get("https://www.etsy.com");
         Driver.getDriver().get("https://www.facebook.com");
