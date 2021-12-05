@@ -11,12 +11,13 @@ public class Driver {
     /*
     Creating the private constructor so this class' object
     is not reachable from outside
-     */
+    We cannot do Driver driver = new Driver();
+         */
     private Driver(){}
 
     /*
     Making our 'driver' instance private so that it is not reachable from outside of the class.
-    We make it static, because we want it to run before everything else, and also we will use it in a static method
+    We make it static, because we want it to run before everything else, and also we will use it in a static method, ensures SINGLE copy of the variable/object.
      */
     private static WebDriver driver;
 
@@ -25,7 +26,7 @@ public class Driver {
      */
     public static WebDriver getDriver(){
 
-        if (driver == null){
+        if (driver == null){ //if driver/chrome was never opened
 
             /*
             We read our browser type from configuration.properties file using
