@@ -11,7 +11,7 @@ public class SystemPropertiesTest {
         System.out.println("User name = " + System.getProperty("user.name"));
         System.out.println("User dir = " + System.getProperty("user.dir"));
 
-        System.out.println("Pom.xml path = " + System.getProperty("user.dir")+"/pom.xml");
+        System.out.println("Pom.xml path = " + System.getProperty("user.dir") + "pom.xml" );
         System.out.println("java version = " + System.getProperty("java.version"));
     }
 }
