@@ -1,0 +1,245 @@
+
+12/05/2021
+----------
+
+Sunday, Test Automation Day 15.
+
+Webtables handling in selenium.
+Xpath techniques for handling web tables
+
+------------------
+
+Properties file in java.
+
+property -> is key + value format data. Similar to map format in data structures.
+
+appName=vytrack
+adminUserName=admin
+adminPassword=abc321
+
+properties file in very popular file in java development and automation projects. We store important properties/info regarding your application or configuration.
+
+Lets take an example of URLs that we have been using so far.
+All urls that we used are inside our code assigned to a variable.
+
+String url = "http://practice.cybertekschool.com/tables";
+
+The above approach is called HARD CODING the value.
+Hard coding:
+	-> it is keeping data/test data in the source code
+	-> assigning input values into variables in our code
+
+What is wrong with that, so far it is working for us?
+	Hard coding values may cause more work when it comes to re-using values, and maintaining data.
+	If a value needs to change, we will need to dig though our code to update everywhere.
+
+How do we use properties file?
+
+In test automation, we store our application Test data into a seperate file that is outside our code.
+Data can be : urls, credentials, environment settings, browser settings, timeouts, database urls, api urls etc
+
+===================
+
+2 Types of Properties in java:
+	-> built in properties
+	-> properties that programmer defines in configuration.properties file
+
+
+built in properties are avaible in any computer and we read those using System.getPropety("prop.name") command
+
+EX:
+System.out.println(System.getProperty("os.name")); MacOS
+System.out.println(System.getProperty("user.name")); CybertekB22
+......
+Built in properties are built into a System, so they are available anywhere in your code.
+
+--------------
+
+For custom properties , we need to add a new file with extension .propeties then type our data in key=value format.
+
+configuration.propeties:
+
+browser=chrome
+env=qa
+qaUrl=https://qa.vytrack.com
+etc
+
+Then we need to read values from that file using Java.
+===============================
+
+add new package day15_properties_driverutil_testbase
+
+add new class SystemPropertiesTest
+
+=============================
+
+System.getProperty("prop_name"); method is used to read built in System properties values. os.name, user.name, user.dir, java.version etc
+
+Lets add a new file into our project.
+configuration.properties
+
+Right click on your project name > new > file > configuration.properties
+
+==========================
+
+Where do you store your test data?
+
+I store my automation test data into different files. Like configuration.properties file in key and value format.
+My urls, credentials, browser , execution settings, test input are stored in configuration.properties file.
+
+I do not hardcode values into my automation code.
+I keep data outside the code so that I can easily maintain it and use it.
+
+How do you read values from properties file?
+
+I use values using java programming language and written a utility for that.
+As we know properties file is like any other file and we need input stream to open it. So i open the file using
+FileInputStream object.
+
+FileInputStream fis = new FileInputStream("configuration.properties");
+
+Then i load it to a Properties object.
+
+Properties properties = new Properties();
+properties.load(fis);
+
+Then use getProperty("key name") method to read values from the file.
+
+String url = properties.getProperty("url");
+driver.get(url);
+
+------
+java.io package -> java Input / Output package.
+java.nio -> java NEW input/output package
+
+FileInputStream class is used to read files using java.
+
+Scanner class can also be used to read file.
+
+INPUT -> reading from files
+OUTPUT -> writing to files
+-------
+
+Since we will be using properties file to store and read values in our automation framework.
+We need some utility class to read values more effectively and easily.
+
+ConfigurationReader in utils package
+
+---------
+
+static variable -> variable belongs to class, it is shared with only one copy. This variable is accessible by static methods
+
+static method -> can be called using the classname.methodname or using object. It can access only other static variables and methods.
+
+static block -> it is a block code that runs ONCE when class is loaded/used. We can add code that needs to run once ONLY.
+
+static inner/nested class -> class that is inside another class. do not worry about this one.
+
+Why are we using static block in our ConfigurationReader class.
+
+Because we want to open the properties file and load to Properties object ONLY ONCE before we read values.
+=========================================
+
+So far -> properties file.
+How to read system properties
+How to add configuration.properties file and add data to it then read using java Propertiers and FileInputStream classes.
+
+Added a utility class ConfigurationReader.
+This class helps us read values from configuration.properties file.
+
+In configuration.properties  file, we store test data that is needed for our automation tests. Like Urls, credentials, browser type etc.
+---------------------------
+
+utils: ConfigurationReader.java -> read values from configuration.properties file
+	 : WebDriverFactory.java -> launching browser and returning
+
+	 : BrowserUtils.java -> has sleep method that helps us pause the code
+
+	 : SmartBearUtils.java -> has application specific reusable methods for SmartBear application
+
+	 : Driver.java -> similar to WebDriverFactory but more advanced version. It provides ability for all the tests/classes to SHARE same browser. It will make sure there is SINGLE browser opened and all actions run on same browser.
+
+	 We use Singleton pattern approach to write this class.
+
+Singleton pattern -> this pattern ensures that there is ONLY ONE object of this class can be created and all classes SHARE/USE that same object.
+We cannot create multiple objects of a class that uses singleton pattern.
+
+Singleton pattern -> single object/instance throughout the project
+------------
+
+There are different patterns in java programming in general and some are specific to automation as well.
+
+- singleton
+- builder
+- page object model pattern
+
+public class Car {
+	private Car(){}
+	private Car(String model, String color){vars...}
+
+	private static Car car;
+
+	public static Car getCar(){
+		if(car == null) {
+			car = new Car("Model 3", "blue");
+		}
+
+		return car;
+	}
+}
+
+Features to achieve singleton:
+
+-> private constructor -> prevent object creation.
+
+Car car = new Car(); it will not compile in other classes. Because constructor is private.
+
+-> static variable for the object -> static will ensure there is only one copy of the object/variable
+
+-> static getter method:
+this method will first check if static variable is null, if it is null, it will assign an object then return it.
+If it is not null, it means that this method was calle before and it will return the same object each time.
+
+Car.getCar(); -> it will return Tesla model 3, blue.
+
+If i type same code again, it will keep returning exact same SINGLE object.
+
+There is no way to create more than ONE object/instance of Singleton class.
+
+Car car1 = new Car();//does not compile
+Car car1 = Car.getCar(); since it is first call, car object is created and returned
+
+Car car2 = Car.getCar(); returns same car object that car1 has.
+
+both car1 and car2 are "Model 3" and "Blue"
+
+So our method keeps returned same SINGLE car object every time the method is called.
+
+In test automation, we use Driver class as Singleton, so that all tests and page object classes share share webdriver object/instance:
+
+WebDriver driver = Driver.getDriver();
+
+driver.get(url);
+-------------------------
+
+add new class Driver
+
+
+SINGLETON CLASS -> a class from which we can create only one object. It ensures that SINGLE object is used by all other classes.
+	-> private constructor. so new keyword will not work
+	-> public static getter method
+
+In Automation, we have Driver class that helps us to have only ONE SINGLE webdriver object. And all classes in our automation framework use the same WEBDRIVER/Browser.
+=====================================
+
+in util package lets add Driver class
+
+Lets add TestBase class with set up and tearDown method
+
+============
+
+Configuration file and Configuration Reader
+Driver class
+Test base
+Webtable practice
+============

@@ -19,6 +19,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  EX:
     WebDriver driver = WebDriverFactory.getDriver("chrome");
     and use driver as normal
+ Thank you, nice working with you, Bye
  */
 
 public class WebDriverFactory {

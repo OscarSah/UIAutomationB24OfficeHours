@@ -1,0 +1,70 @@
+
+12/02/2021
+----------
+
+Test Automation Day 13
+----------------------
+
+yesterday - review, windows practice, intro to java faker library
+
+java faker library -> is used to generate random test data of different types.
+
+How do you get your test data?
+
+Depending on the scenario, I get my test data different ways.
+
+credentials => If it is credentials of different roles, I get it from the shared spread sheet where we store all usernames and passwords for different roles in the application.
+	APP -> admin, user, read only user, seller, trader, buyer...
+
+personal data like names, addresses -> I use library like java faker. It helps with generating values on the fly programmatically.
+
+------------------------
+
+add new package day13_faker_practice_browserutil_properties
+
+add new class RegistrationFormTest
+
+------------------------
+
+TestBase class -> in many automation frameworks, you will often find a class which is a Base class/parent class for all the tests. Normally that class will have @BeforeMethod / @Aftermethod and maybe some actions that are useful for all the tests.
+
+A test class will extend the testBase class. So we only need to write @Test methods in Test classes.
+
+EX:
+
+RegistrationFormTestBase:
+	-> @BeforeMethod
+	-> @AfterMethod
+
+RegistrationFormTest extends RegistrationFormTestBase:
+	-> @Test
+	-> @Test
+
+RegistrationFormNegativeTest extends RegistrationFormTestBase
+	-> @Test
+	-> @Test
+=======================
+
+In some tests, we can also create reusable java methods for repeatable steps.
+
+Ex: public void enterUserName(String userName) {
+        WebElement userNameField = driver.findElement(By.name("username"));
+        userNameField.sendKeys(userName);
+    }
+We wrote above method just as an example, we will write more when we do page object model.
+
+=======================
+
+Utility classes are written for repeated steps to call and reuse methods.
+It is good for code reusability and more readable code.
+
+BrowserUtils
+	static method sleep(int seconds)
+
+We have been using Thread.sleep very often, so why not make it a reusable utility method and call it whenever we need to pause the execution of the code.
+
+Thread.sleep(1000);
+Instead:
+
+BrowserUtils.sleep(1);
+===============================
