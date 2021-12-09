@@ -1,6 +1,7 @@
 package com.cybertek.officeHours.oH04;
 
 import com.cybertek.tests.TestBase;
+import com.cybertek.utils.BrowserUtils;
 import com.cybertek.utils.ConfigurationReader;
 import com.cybertek.utils.Driver;
 import com.cybertek.utils.officeUtils;
@@ -49,9 +50,11 @@ public class placeOrderTest extends TestBase {
     //               //..:   going to parent (row of that cell)
     //              // td[.='Delete']/a   :  goes back down to child which has Delete element cell
 
-        Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'Iphone 6 32gb')]//..//td[.='Delete']/a"))
+       BrowserUtils.sleep(2);
 
+        Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'Iphone 6 32gb')]//..//td[.='Delete']/a")).click();
 
+        BrowserUtils.sleep(3);
 
     }
 

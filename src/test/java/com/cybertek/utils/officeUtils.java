@@ -35,6 +35,12 @@ public class officeUtils {
         return productsPrice;
     }
 
+public static int removeProduct(String product){
+    int productPrice = 0;
+        // remove the product and return its price as well
 
+
+    return productPrice;
+}
 
 }
