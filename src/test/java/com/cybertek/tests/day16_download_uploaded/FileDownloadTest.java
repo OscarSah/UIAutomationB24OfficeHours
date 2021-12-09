@@ -1,4 +1,4 @@
-package com.cybertek.tests.day16_download_uploaded_js_executor;
+package com.cybertek.tests.day16_download_uploaded;
 
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.BrowserUtils;
