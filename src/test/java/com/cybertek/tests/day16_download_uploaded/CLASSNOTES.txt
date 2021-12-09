@@ -1,0 +1,202 @@
+
+12/08/2021
+----------
+
+Test Automation Day 16
+----------------------
+
+Last class:
+	- configuration.properties file
+	- Added utility class ConfigurationReader.java
+	- Driver.java singleton class
+	- TestBase.java class as parent for all test classes
+
+What is properties file?
+	Properties file is a file that has extension .properties
+	It is like any other file image.png , notes.txt, resume.docx
+	expenses.xlsx etc
+
+EASY TO MAINTAIN, EASY TO FIND THE DATA
+
+Property is Key=value format data.
+Key is the name of the property
+= then the value.
+Almost all java projects use properties file to store test data and configuration. Credentials, urls, names, browser names
+- it is a standard way of managing test data in external file
+
+Instead of hard coding the data in the code, we store in separate configuration.propeties file.
+
+url=https://www.google.com
+
+Similar to Map<K,V> data structure in Java.
+
+---------------------
+
+How to read from properties file?
+
+We use Properties class to read the file.
+
+First we open the file usign FileInputSteam object
+
+Then load it to properties object
+
+Then we can use getProperty("keyName") method to read the values.
+
+Propeties propeties = new Properties();
+//Open the file
+FileInputStream inputStream = new FileInputStream("config.propeties");
+propeties.load(inputStream);
+
+String url = propeties.getProperty("app.url");
+driver.get(url);
+---------------
+
+Since we did not want to keep writing those lines, we added ConfigurationReader.java utility class.
+It opens and loads values from configuration.propeties file and we can just call the static method getProperty() to read any property value from our file anywhere in our code.
+
+propeties file:
+	url=https://www.google.com
+
+@Test
+public void searchGoogleTest() {
+	WebDriverManager.chromeDriver().setUp();
+	WebDriver driver = new ChromeDriver();
+	driver.get(ConfigurationReader.getProperty("url"));
+}
+===============================
+
+Driver utility class:
+	-> every time we open a browser using selenium, we need to :
+		Set up browser driver using WebDriverManager class
+		Creating chromedriver object
+		maximizing the browser
+		setting implicit wait time
+
+	-> also there is a challenge of passing the same browser to different methods.
+
+	EtsyUtil.login(String userName, String pwd, WebDriver driver);
+
+	EtsyUtil.login("adalat", "baku123", driver);
+
+So to solve above issues to achive code reusability, maintainability, and ability to easily use same webdriver object in any class - we added Driver class.
+
+Driver class is a singleton class.
+
+Singleton class -> this design pattern ensures that there is only SINGLE OBJECT available for this class. All classes share SAME single Object that singleton class provides.
+
+It is very handy for use, because our tests, reusable methods, page object class can all ACCESS same BROWSER object/instance.
+
+Driver class has a method called getDriver()
+
+Driver.getDriver() -> when we type this statement anywhere in our property, this will return SAME WEBDRIVER OBJECT.
+
+@Test
+public void gotoGoogle() {
+	//Driver.getDriver().get(ConfigurationReader.getPropety("google.url"));
+	WebDriver driver = Driver.getDriver(); //open chrome
+	driver.get("https://www.google.com");
+
+	GoogleUtils.searchFor("wooden spoon");
+}
+
+public class GoogleUtils {
+	public static void searchFor(String item) {
+		WebDriver driver = Driver.getDriver();
+		driver.findElement(...).sendKeys(item);
+		....
+	}
+}
+==========================
+
+TestBase class:
+	it is not a utilty class.
+	It is a abstract parent class for all test classes
+	it has setUp and tearDown methods with @BeforeMethod and @AfterMethod annotations
+	We store common steps that belong to all tests in this parent class
+
+	Right now it is only a browser setUp and teardown, but we could add:
+		-> some reusable method that ALL tests need
+		-> some variables or any other objects etc
+
+public abstract class TestBase {
+	protected WebDriver driver;
+	etc
+
+	@BeforeMethod
+	public void setUp() {
+		.....
+
+	}
+
+	@AfterMethod
+	public void tearDown() {
+		close driver, close database connection, close excel files etc etc
+	}
+
+}
+
+All test classes EXTEND the TestBase:
+
+public class UpdateAddressTest extends TestBase {
+	@Test
+	....
+}
+
+public class transferFundsTest extends TestBase {
+	@Test
+	....
+}
+===============================
+
+File download and verify if file is downloaded successfully
+File upload
+javaScript executor
+------------------------
+
+add new package day16_download_uploaded_js_executor
+add new class FileDownloadTest
+	extends TestBase
+
+- add app url to configuration.propeties
+	download.url=http://practice.cybertekschool.com/download
+
+- add @Test fileDownloadTest
+	and navigate to the download.url
+		- read url value using ConfigurationReader utility class
+
+To download a file, we locate the link to the file name or a download icon, then we verify if file is successfully downloaded to downloads folder.
+
+fileToDownload.click();
+
+We need to use File class to be able to check if file exists in the downloads folder. or to delete the file.
+
+System.getPropety("user.home") => always returns path to the user home in the system like "/Users/murodil" etc
+	"C:\Users\Mert"
+	"C:\Users\vural"
+
+File file = new File( System.getPropety("user.home") + "/Downloads/file-name.txt" );
+
+Then we can use file manipulation methods that comes with file object.
+
+file.exists() => return true if file is present, false if not
+file.delete() => deletes the file
+file.createNewFile(); creates/adds a new file in the computer
+
+We can put assertion to check if file is downloaded successfully:
+
+Assert.assertTrue(file.exists());
+Assert.assertEquals(file.exists() , true);
+============================================
+
+
+File upload:
+	- to upload a file using selenium, we simple locate the input element and sendkeys the filePath.
+	- it will automatically upload the file
+	- we do not need to handle file upload window
+
+	<input id="file-upload" type="file" name="file">
+
+	WebElement upload = driver.findElement(By.id("file-upload"));
+	upload.sendKeys(file_path);
+
+
