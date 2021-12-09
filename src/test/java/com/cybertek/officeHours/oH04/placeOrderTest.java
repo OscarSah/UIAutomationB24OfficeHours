@@ -2,7 +2,9 @@ package com.cybertek.officeHours.oH04;
 
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.ConfigurationReader;
+import com.cybertek.utils.Driver;
 import com.cybertek.utils.officeUtils;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 public class placeOrderTest extends TestBase {
@@ -39,8 +41,15 @@ public class placeOrderTest extends TestBase {
 
         System.out.println(expectedPrice);
 
+        officeUtils.getLink("Cart").click();
 
+        // I am try to locate delete button dynamically: I want to provide product's name so it will return me webelement
 
+    //                //tbody//tr//td[contains(text(),'Sony vaio i7')] = this finds me cell that includes the product name
+    //               //..:   going to parent (row of that cell)
+    //              // td[.='Delete']/a   :  goes back down to child which has Delete element cell
+
+        Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'Iphone 6 32gb')]//..//td[.='Delete']/a"))
 
 
 
