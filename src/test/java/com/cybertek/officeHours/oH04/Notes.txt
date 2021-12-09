@@ -1,0 +1,12 @@
+Testing Framework
+    configuration.properties: Test Data (changing the course of your tests data, environment and browser)
+        it is in key and value format
+
+  Utility Classes:
+        General utilities
+                Driver class (Singleton Design concept)
+                BrowserUtils Class
+                Conf.Reader
+        Project related utilities
+                smartbearUtils
+                officeUtils
