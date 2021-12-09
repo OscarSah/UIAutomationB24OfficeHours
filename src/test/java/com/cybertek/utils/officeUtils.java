@@ -31,6 +31,7 @@ public class officeUtils {
         BrowserUtils.sleep(2);
         alert = Driver.getDriver().switchTo().alert(); // initialize the object
         alert.accept();
+        getLink("Home").click();
         return productsPrice;
     }
 
