@@ -1,9 +1,12 @@
 package com.cybertek.utils;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class officeUtils {
+
+    static Alert alert;  // declare a static alert object
 
 // create a static method, will accept String, will return WebElement, getLink(String str)
 
@@ -23,8 +26,12 @@ public class officeUtils {
         WebElement priceContainer = Driver.getDriver().findElement(By.xpath("//h3"));
         int productsPrice=Integer.parseInt(priceContainer.getText().substring(1,4));
 
-
-
+        // click on Add to cart
+        getLink("Add to cart").click();
+        BrowserUtils.sleep(2);
+        alert = Driver.getDriver().switchTo().alert(); // initialize the object
+        alert.accept();
+        return productsPrice;
     }
 
 
