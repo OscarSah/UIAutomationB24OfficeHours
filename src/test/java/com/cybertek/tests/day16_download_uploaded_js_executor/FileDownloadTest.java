@@ -21,6 +21,8 @@ public class FileDownloadTest extends TestBase {
 
         BrowserUtils.sleep(2);
 
+
+
         //verify that file is downloaded: /Users/cybertekb24/       Downloads/some-file.txt
         String filePath = System.getProperty("user.home") + "/Downloads/some-file.txt";
         System.out.println("filePath = " + filePath);
@@ -28,6 +30,10 @@ public class FileDownloadTest extends TestBase {
         //build file object
         File file = new File( filePath );
         System.out.println("File exist = " + file.exists());
+
+//        while(!file.exists()) {
+//            BrowserUtils.sleep(1);
+//        }
 
         Assert.assertTrue(file.exists() , "File download failed");
 
