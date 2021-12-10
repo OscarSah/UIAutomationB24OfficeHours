@@ -71,8 +71,4 @@ public class JavaScriptExecutorTest extends TestBase {
         js.executeScript("arguments[0].value='hello@gmail.com'" , userName);
 
     }
-
-
-
-
 }
