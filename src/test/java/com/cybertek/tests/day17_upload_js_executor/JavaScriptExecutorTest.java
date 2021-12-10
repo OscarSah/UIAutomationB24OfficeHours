@@ -4,7 +4,9 @@ import com.cybertek.tests.TestBase;
 import com.cybertek.utils.BrowserUtils;
 import com.cybertek.utils.ConfigurationReader;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 public class JavaScriptExecutorTest extends TestBase {
@@ -33,6 +35,22 @@ public class JavaScriptExecutorTest extends TestBase {
             BrowserUtils.sleep(1);
             js.executeScript("window.scrollBy(0, 1000)");
         }
+
+    }
+
+    @Test
+    public void scrollToElementTest() {
+        driver.get(ConfigurationReader.getProperty("tesla.url"));
+        //locate model y element
+        WebElement modelYLabel = driver.findElement(By.xpath("(//h1[.='Model Y'])[1]"));
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+
+        js.executeScript("arguments[0].scrollIntoView(true)" , modelYLabel );
+
+        BrowserUtils.sleep(2);
+
+
 
     }
 
