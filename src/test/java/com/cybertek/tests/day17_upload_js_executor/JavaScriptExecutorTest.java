@@ -60,4 +60,19 @@ public class JavaScriptExecutorTest extends TestBase {
 
     }
 
+    @Test
+    public void setValueUsingJSTest() {
+        driver.get(ConfigurationReader.getProperty("facebook.url"));
+
+        WebElement userName = driver.findElement(By.name("email"));
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        js.executeScript("arguments[0].value='hello@gmail.com'" , userName);
+
+    }
+
+
+
+
 }
