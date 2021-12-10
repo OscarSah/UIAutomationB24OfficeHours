@@ -53,6 +53,11 @@ public class JavaScriptExecutorTest extends TestBase {
         WebElement contactLink = driver.findElement(By.xpath("//a[@href='/contact']"));
         js.executeScript("arguments[0].scrollIntoView(true)" , contactLink );
 
+        WebElement shopNow = driver.findElement(By.xpath("//a[@title='Shop Now']"));
+        js.executeScript("arguments[0].scrollIntoView(true)" , shopNow);
+
+        //js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
     }
 
 }
