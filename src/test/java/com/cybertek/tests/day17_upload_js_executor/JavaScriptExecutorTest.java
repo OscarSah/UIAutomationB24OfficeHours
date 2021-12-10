@@ -50,7 +50,8 @@ public class JavaScriptExecutorTest extends TestBase {
 
         BrowserUtils.sleep(2);
 
-
+        WebElement contactLink = driver.findElement(By.xpath("//a[@href='/contact']"));
+        js.executeScript("arguments[0].scrollIntoView(true)" , contactLink );
 
     }
 
