@@ -27,6 +27,5 @@ public class Guru99UploadTest extends TestBase {
         //has been successfully uploaded. message
         WebElement resultMsg = driver.findElement(By.id("res"));
         Assert.assertEquals(resultMsg.getText(), "1 file\nhas been successfully uploaded.");
-
     }
 }
