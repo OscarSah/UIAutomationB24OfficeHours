@@ -47,4 +47,10 @@ public class ActionsDemoTest extends TestBase {
         }
     }
 
+    @Test
+    public void googleFeelingLuckyBtnHoverTest() {
+        driver.get(ConfigurationReader.getProperty("google.url"));
+
+    }
+
 }
