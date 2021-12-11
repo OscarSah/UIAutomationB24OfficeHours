@@ -50,7 +50,17 @@ public class ActionsDemoTest extends TestBase {
     @Test
     public void googleFeelingLuckyBtnHoverTest() {
         driver.get(ConfigurationReader.getProperty("google.url"));
+        //locate 2 buttons
+        WebElement searchBtn = driver.findElement(By.xpath("//div[@class='FPdoLc lJ9FBc']//input[@value='Google Search']"));
+        WebElement feelingLuckyBtn = driver.findElement(By.id("gbqfbb"));
 
+       // Actions actions = new Actions(driver); no need - declared in TestBase
+        for(int i = 1; i <= 5; i++) {
+            actions.moveToElement(feelingLuckyBtn).perform();
+            BrowserUtils.sleep(1);
+            actions.moveToElement(searchBtn).perform();
+            BrowserUtils.sleep(1);
+        }
     }
 
 }
