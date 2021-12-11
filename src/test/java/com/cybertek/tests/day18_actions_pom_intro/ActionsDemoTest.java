@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class ActionsDemoTest extends TestBase {
     @Test
     public void hoverElementTest() {
@@ -32,6 +34,17 @@ public class ActionsDemoTest extends TestBase {
         actions.moveToElement(img3).perform();
 
         //repeat above steps with the loop
-
     }
+
+    @Test
+    public void hoverOverGroupOfElements() {
+        driver.get(ConfigurationReader.getProperty("hover.url"));
+        List<WebElement> images = driver.findElements(By.tagName("img"));
+
+        for(WebElement img : images) {
+            BrowserUtils.sleep(1);
+            actions.moveToElement(img).perform();
+        }
+    }
+
 }

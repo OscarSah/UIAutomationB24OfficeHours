@@ -1,0 +1,88 @@
+
+12/11/2021 - Saturday
+----------
+
+Test Automation Day 18
+----------------------
+
+add new package day18_actions_pom_intro
+
+add new class EtsySubscribeTest
+
+Goto Etsy homepage
+Scroll down
+Generate random email and enter into subscribe box
+Click on Subscribe
+Verify "Great! We've sent you an email to confirm your subscription." is displayed
+
+How to scroll down the page?
+
+We use javaScriptExecutor interface to scroll down the page.
+Along with javascript command.
+
+2 ways to scroll:
+	#1 -> scroll down or up to certain pixel number
+	#2 -> scrollToView -> scroll to a certain web element
+
+	Syntax:
+
+First cast webdriver to JavascriptExecutor interface
+Then call execute script method.
+
+========================================
+
+Actions class in Selenium:
+
+- Actions class is used for advanced mouse and keyboard actions using Selenium
+- Like double click, hover over an element, right click, drag drop, etc
+- Press keyUp or keyDown on the keyboard etc.
+
+When doing test automation, at some steps, we will need to perform advanced actions to simulate user.
+
+How to use Actions class?
+
+	#1 -> Create object of Actions class and pass the driver to constructor
+		Actions actions = new Actions(driver);
+
+	#2 -> call the required method or methods for a particular webelement or in general
+
+	#3 -> add perform() or build().perform() at the end
+
+
+Some actions we can do using Actions class:
+
+Actions actions = new Actions(driver);
+
+Hover over and element:
+
+actions.moveToElement(elem).perform();
+
+Click and hold action:
+
+actions.clickAndHold(elem).perform()
+
+actions.dragAndDrop().perform()
+
+actions.doubleClick().perform()
+
+actions.contextClick().perform()
+
+add new class ActionsDemoTest
+
+hover.url=http://practice.cybertekschool.com/hovers
+=======================
+
+WebElement img1 = driver.findElement(By.xpath("(//img)[1]"));
+
+//create Actions class object to be able to hover over image
+Actions actions = new Actions(driver);
+
+//hover over img1
+actions.moveToElement(img1).perform();
+
+In above code, we are locating the image on the page.
+Then creating object of Actions class to be able to hover over.
+We are calling moveToElement(img1) method to hover over the img1 webelement.
+
+perform() method needs to be added at the end to actually Perform/Run the moveToElement or other action
+
