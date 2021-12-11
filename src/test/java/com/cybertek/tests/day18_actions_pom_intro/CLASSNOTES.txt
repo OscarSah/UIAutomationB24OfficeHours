@@ -165,6 +165,40 @@ Difference between perform() vs build().perform()
 			 	.build().perform();
 
 One important thing is that perform() method also calls build() method internally, so just perform() should work for multiple actions as well.
+======================================
 
-ANGRY BIRDS TIME TILL 4:17 PM EST
+Add new class ActionsDoubleClickTest
+@Test
+public void doubleClickForColorChange() {
+
+}
+
+doubleclick.url=https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_ev_ondblclick2
+
+========================================
+
+new Actions(driver).doubleClick(text).perform();
+
+The above line combines creating object of Actions class then calling doubleClick method into single statement.
+
+We could do this when we want to perform single action and do not need the actions object any longer.
+
+new ChromeDriver().get("https://www.etsy.com");
+
+===========================================
+
+How to drag and drop using Selenium:
+
+I use actions class and dragAndDrop method for that.
+
+It accepts 2 elements, drag first element and drop to second element
+
+add new class ActionsDragAndDropTest
+
+@Test
+public void dragAndDropTest() {
+
+}
+
+dragadndrop.url=http://demo.guru99.com/test/drag_drop.html
 
