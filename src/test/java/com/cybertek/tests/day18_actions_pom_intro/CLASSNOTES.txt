@@ -85,4 +85,86 @@ Then creating object of Actions class to be able to hover over.
 We are calling moveToElement(img1) method to hover over the img1 webelement.
 
 perform() method needs to be added at the end to actually Perform/Run the moveToElement or other action
+===================================
+
+Since we mostly need Actions object in our tests, it might be a good idea to add the actions object variable to TestBase class.
+
+TestBase class is parent class to all Test classes, so if we declare protected or public variables or methods, all child classes can access them easily.
+
+public abstract class TestBase {
+    protected WebDriver driver;
+    protected Faker faker = new Faker();
+    protected Actions actions;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = Driver.getDriver();
+        actions = new Actions(driver);
+    }
+
+In above example, we declared:
+	 protected Actions actions;
+
+Then assigned the actual object new Actions(driver) inside the setUp method.
+
+It will ensure that when we create an object of Actions class, we already have an open webdriver object, since Actions class needs an active WebDriver object in the constructor
+
+actions = new Actions(driver);
+
+
+<input class="gNO89b" value="Google Search" aria-label="Google Search" name="btnK" type="submit" data-ved="0ahUKEwiI3-C0vtz0AhXroHIEHcoHBdoQ4dUDCAk">
+
+<input class="gNO89b" value="Google Search" aria-label="Google Search" name="btnK" type="submit" data-ved="0ahUKEwiI3-C0vtz0AhXroHIEHcoHBdoQ4dUDCA0">
+
+Looks like google search button is not unique, there are 2 of them on the page and we need the second one.
+In this situation we can use index:
+
+(//input[@value='Google Search'])[2]
+
+However, using indexes in xpath can fail if they add another matching element to the page. Thats why we need to find a way to find it uniquely first before going for index.
+
+After analyzing, we found out that Google search button element parent has unique class name, so below xpath is finding the parent first then searching for Google search button among child elements:
+
+//div[@class='FPdoLc lJ9FBc']//input[@value='Google Search']
+===============================
+
+add new class ActionsSendKeysTest
+@Test
+public void scrollWithKeysTest
+
+practice.base.url=http://practice.cybertekschool.com
+
+driver.get(ConfigurationReader.getProperty("practice.base.url") + "/hover");
+
+driver.get(ConfigurationReader.getProperty("practice.base.url") + "/tables");
+
+---------------------------
+
+Actions class can also be used to automate keyboard key presses.
+
+actions.sendKeys(Keys.PAGE_UP).perform();
+
+sendKeys method is used to send keyboard presses with Keys class.
+
+---------------------------
+
+How to right click using selenium:
+
+-> I can use Actions class and contextClick() method to perform right click
+
+
+Difference between perform() vs build().perform()
+
+ perform() => When using actions class, if we perform 1 single action
+   ex: actions.moveToElement(btn).perform();
+
+ build().perform() => we use this when we chain multiple actions together.
+ 	Ex: actions.moveToElement(btn)
+			 	.contextClick(btn)
+			 	.sendKeys(Keys.ENTER)
+			 	.build().perform();
+
+One important thing is that perform() method also calls build() method internally, so just perform() should work for multiple actions as well.
+
+ANGRY BIRDS TIME TILL 4:17 PM EST
 
