@@ -10,6 +10,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.*;
+
 public class EtsySubscribeTest extends TestBase {
     /**
      * Goto Etsy homepage
@@ -33,7 +35,11 @@ public class EtsySubscribeTest extends TestBase {
 
         emailField.sendKeys(faker.internet().emailAddress() + Keys.ENTER);
 
+        BrowserUtils.sleep(5);
 
+        WebElement successMsg = driver.findElement(By.xpath("//div[@class='wt-alert wt-alert--inline wt-alert--success-01 wt-text-body-01']"));
+        assertTrue(successMsg.isDisplayed());
+        assertEquals(successMsg.getText(), "Great! We've sent you an email to confirm your subscription.");
 
     }
 }
