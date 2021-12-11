@@ -1,10 +1,9 @@
-package com.cybertek.tests.day18_actions_pom_intro;
+package com.cybertek.tests.day18_actions_class;
 
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.ConfigurationReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;

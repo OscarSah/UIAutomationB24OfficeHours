@@ -1,11 +1,9 @@
-package com.cybertek.tests.day18_actions_pom_intro;
+package com.cybertek.tests.day18_actions_class;
 
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.BrowserUtils;
 import com.cybertek.utils.ConfigurationReader;
-import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;

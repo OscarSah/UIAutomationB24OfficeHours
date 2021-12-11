@@ -1,4 +1,4 @@
-package com.cybertek.tests.day18_actions_pom_intro;
+package com.cybertek.tests.day18_actions_class;
 
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.BrowserUtils;
