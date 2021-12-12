@@ -1,0 +1,152 @@
+
+12/12/2021 - Sunday
+-------------------
+
+Test Automation Day 19
+
+Yesterday:
+	- Actions class
+
+When do we use actions class in Selenium?
+	- to perform advanced mouse and keyboard actions like hovering over, double click, right click, drag and drop etc
+	- or sending keyboard clicks like arrow up or down, enter, control etc
+
+Syntax:
+	1) create Actions class object
+	2) call the method by ending with perform() or build().perform();
+
+Actions actions = new Actions(driver);
+actions.moveToElement(elem).perform();
+
+actions.moveToElement(link).click().build().perform();
+===================
+
+Drag and Drop using Actions class.
+
+dragAndDrop(sourceElem, targetElem) => this method accepts 2 webelements, it will Drag sourceElem and Drop onto targetElem.
+
+Actions actions = new Actions(driver);
+actions.dragAndDrop(fiveKPrice , targetEleme),perform();
+
+dragAndDropBy(sourceElem, x , y) => this method accepts 1 element that will be dragged and dropped onto X and Y coordinates on the browser. It is useful especially when doing sliders automation.
+
+How to find x and Y locations, we can use one of the chrome extension called "coordinates".
+
+=======================
+
+add new package day19_page_object_model
+
+add new class DragAndDropTest
+
+@Test
+public void guru99DragAndDropTest() {
+
+}
+https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePageModel&entitySelectingHelper.selectedEntity=d177&zip=22102
+
+cargurus.url=https://www.cargurus.com
+
+@Test
+public void cargurusPriceSliderTest() {
+	driver.get(ConfigurationReader.getProperty("cargurus.url")+"/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePageModel&entitySelectingHelper.selectedEntity=d177&zip=22102");
+}
+=========================
+
+actions.dragAndDropBy(priceSlider, 100, 0).perform();
+
+We can use dragAndDropBy method for handling sliders using Selenium.
+dragAndDropBy() -> accepts 3 parameters:
+	WebElement to move, x and y coordinates relative to the webelement.
+
+	If you need to move the slider to the right then just increase the X coordinate - like in example above.
+	actions.dragAndDropBy(priceSlider, 100, 0).perform();
+
+	For moving to the left -> provide negative X coordinate:
+	actions.dragAndDropBy(priceSlider, -100, 0).perform();
+
+	For moving up -> provide -> positive Y coordinate
+	For moving down -> privide negative Y coordinate
+
+
+-----------
+actions.clickAndHold(priceSlider)
+       .sendKeys(Keys.ARROW_RIGHT)
+       .release().build().perform();
+
+If we break down the steps in above command:
+	clickAndHold(priceSlider) -> it will click and hold the element like you would do with a cheap mouse.
+
+ 	.sendKeys(Keys.ARROW_RIGHT) => it will press on right arrow on your cheap keyboard
+
+ 	.release() -> will stop the hold and release the element
+
+	.build().perform() => will put together all the actions and then run it. just .perform() also works.
+===========
+
+POM -> Page Object Model
+It is a design structure/pattern in Selenium automation.
+
+We create a dedicated Java class for each Page in our application.
+WebElements on the page will be instance variables for the java page object class.
+
+Actions/steps we do on the page, will be Methods for the java page object class.
+
+Example:
+	Lets say you are searching for user Pacifica mini van on Car gurus website.
+
+	Steps: Goto HomePage
+				=> select options and click search
+		   SearchResultsPage:
+		   		=> adjust price, see the results etc
+		   		=> click on 1 of the vehicles
+		   VehicleDetailsPage
+		   		=> features, contact details, ratings etc
+
+Selenium Code without POM:
+	Select model = new Select(driver.findElement(By.id("make")));
+	model.selectByVisibleText("Pacifica");
+	...
+
+	On next page:
+	WebElement car1 = driver.findElement(By.id("vehicle1"));
+	car1.click();
+
+	On details page:
+
+	WebElement contactDetails = driver.findElement(By.id("contact"));
+	contactDetails.getText() ==> read contact
+
+
+Selenium using POM design:
+
+	CarGuruHomePage homePage = new CarGuruHomePage(driver);
+	homePage.model.selectByVisibleText("Pacifica");
+	homePage.searchBtn.click();
+
+	SearchResultsPage resultsPage = new SearchResultsPage(driver);
+	resultsPage.selectCar(3);
+
+	CarDetailsPage detailsPage = new CarDetailsPage(driver);
+	println(detailsPage.mileAge.getText());
+================================================
+
+add new package pages
+public class LibraryLoginPage {
+
+    @FindBy(id="inputEmail")
+    public WebElement email;
+}
+
+@FindBy is an annotation in selenium that replaces findElement() method
+
+
+WebElement email = driver.findElement(By.id("inputEmail"));
+
+USING POM:
+
+@FindBy(id="inputEmail")
+WebElement email;
+======================================
+
+BREAK TILL 2:15 PM EST
+
