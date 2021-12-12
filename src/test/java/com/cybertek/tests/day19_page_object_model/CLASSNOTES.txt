@@ -148,5 +148,4 @@ USING POM:
 WebElement email;
 ======================================
 
-BREAK TILL 2:15 PM EST
 
