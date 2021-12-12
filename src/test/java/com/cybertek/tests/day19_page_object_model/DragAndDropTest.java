@@ -31,19 +31,19 @@ public class DragAndDropTest extends TestBase {
 
         WebElement priceSlider = driver.findElement(By.xpath("(//button[@aria-valuemin='3000'])[1]"));
 
-        actions.clickAndHold(priceSlider)
-                .sendKeys(Keys.ARROW_RIGHT, Keys.ARROW_RIGHT, Keys.ARROW_RIGHT,
-                        Keys.ARROW_RIGHT, Keys.ARROW_RIGHT, Keys.ARROW_RIGHT)
-                .release().build().perform();
+//        actions.clickAndHold(priceSlider)
+//                .sendKeys(Keys.ARROW_RIGHT, Keys.ARROW_RIGHT, Keys.ARROW_RIGHT,
+//                        Keys.ARROW_RIGHT, Keys.ARROW_RIGHT, Keys.ARROW_RIGHT)
+//                .release().build().perform();
 
 
-        //        int x = priceSlider.getLocation().getX();
+        //int x = priceSlider.getLocation().getX();
 //        int y = priceSlider.getLocation().getY();
 //
 //        System.out.println("x = " + x);
 //        System.out.println("y = " + y);
 //
-//      actions.dragAndDropBy(priceSlider, 457, 833).perform();
+       actions.dragAndDropBy(priceSlider, 100, 0).perform();
     }
 
 
