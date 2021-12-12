@@ -1,11 +1,13 @@
 package com.cybertek.tests.day19_page_object_model;
 
+import com.cybertek.pages.BookManagementPage;
 import com.cybertek.pages.LibraryLoginPage;
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.ConfigurationReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 
 public class LibraryLoginPOMTest extends TestBase {
@@ -32,6 +34,10 @@ public class LibraryLoginPOMTest extends TestBase {
         loginPage.password.sendKeys(ConfigurationReader.getProperty("library3.student.password"));
         loginPage.signInBtn.click();
 
+        //Book management page steps: verify is correct page, verify label is displayed
+        BookManagementPage bookManagementPage = new BookManagementPage();
+        assertTrue(bookManagementPage.bookMangtHeader.isDisplayed());
+        bookManagementPage.isCurrentPage();
     }
 
 
