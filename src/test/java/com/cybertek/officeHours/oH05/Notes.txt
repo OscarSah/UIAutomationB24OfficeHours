@@ -1,0 +1,13 @@
+Tell me about your Framework:
+    * Maven: The build tool
+    * JAVA language for our codes
+    * UI Automation part We are using Selenium Library
+ Folder and File Structure in our framework
+       - pom.xml : the brain for Maven projects, we control dependencies
+       and configuration of our project
+       - configuration.properties file: central location that will effect the course of our tests
+       - TestBase is the parent of all the tests(before and after)
+       - Utility Classes : Project related, or general utilities (Driver class)
+
+       - POM design: Software Design Concept
+       ** we put common locators and methods for the page that we are testing
