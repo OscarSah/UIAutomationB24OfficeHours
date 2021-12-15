@@ -24,15 +24,11 @@ public class PlaceOrderTest2 extends TestBase {
         // adding Monitor
         expectedPrice += officeUtils.addProduct("Monitors","Apple monitor 24");
 
-        System.out.println(expectedPrice);
-
         officeUtils.getLink("Cart").click();
 
         expectedPrice -= officeUtils.removeProduct("Iphone 6 32gb");
 
-
-        BrowserUtils.sleep(1);
-
+        System.out.println("expectedPrice = " + expectedPrice);
 
 
     }
