@@ -1,5 +1,6 @@
 package com.cybertek.officeHours.oH05;
 
+import com.cybertek.pages.PlaceOrderPage;
 import com.cybertek.tests.TestBase;
 import com.cybertek.utils.BrowserUtils;
 import com.cybertek.utils.ConfigurationReader;
@@ -30,6 +31,9 @@ public class PlaceOrderTest2 extends TestBase {
 
         System.out.println("expectedPrice = " + expectedPrice);
 
+        // we are calling our form filling method
+        PlaceOrderPage placeOrderPage = new PlaceOrderPage();
+        placeOrderPage.fillForm(faker);
 
     }
 

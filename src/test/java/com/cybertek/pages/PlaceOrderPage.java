@@ -1,6 +1,7 @@
 package com.cybertek.pages;
 
 import com.cybertek.utils.Driver;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -35,7 +36,17 @@ public class PlaceOrderPage {
     public WebElement yearBox;
 
 
+    public void fillForm(Faker faker){
 
+        nameBox.sendKeys(faker.name().fullName());
+        countryBox.sendKeys(faker.country().name());
+        cityBox.sendKeys(faker.address().city());
+        cardBox.sendKeys(faker.finance().creditCard());
+        monthBox.sendKeys(""+faker.number().numberBetween(1,12));
+        yearBox.sendKeys(""+faker.number().numberBetween(2022,2026));
+
+
+    }
 
 
 
