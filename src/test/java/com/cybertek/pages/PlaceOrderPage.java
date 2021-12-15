@@ -35,6 +35,8 @@ public class PlaceOrderPage {
     @FindBy(id = "year")
     public WebElement yearBox;
 
+    @FindBy(xpath = "//button[.='Purchase']")
+    public WebElement purchaseButton;
 
     public void fillForm(Faker faker){
 

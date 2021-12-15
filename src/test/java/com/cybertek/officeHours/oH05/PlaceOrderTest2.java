@@ -33,7 +33,9 @@ public class PlaceOrderTest2 extends TestBase {
 
         // we are calling our form filling method
         PlaceOrderPage placeOrderPage = new PlaceOrderPage();
+        placeOrderPage.placeOrderButton.click();
         placeOrderPage.fillForm(faker);
+        placeOrderPage.purchaseButton.click();
 
     }
 
