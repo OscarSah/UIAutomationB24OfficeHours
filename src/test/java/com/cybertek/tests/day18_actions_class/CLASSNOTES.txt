@@ -1,0 +1,204 @@
+
+12/11/2021 - Saturday
+----------
+
+Test Automation Day 18
+----------------------
+
+add new package day18_actions_pom_intro
+
+add new class EtsySubscribeTest
+
+Goto Etsy homepage
+Scroll down
+Generate random email and enter into subscribe box
+Click on Subscribe
+Verify "Great! We've sent you an email to confirm your subscription." is displayed
+
+How to scroll down the page?
+
+We use javaScriptExecutor interface to scroll down the page.
+Along with javascript command.
+
+2 ways to scroll:
+	#1 -> scroll down or up to certain pixel number
+	#2 -> scrollToView -> scroll to a certain web element
+
+	Syntax:
+
+First cast webdriver to JavascriptExecutor interface
+Then call execute script method.
+
+========================================
+
+Actions class in Selenium:
+
+- Actions class is used for advanced mouse and keyboard actions using Selenium
+- Like double click, hover over an element, right click, drag drop, etc
+- Press keyUp or keyDown on the keyboard etc.
+
+When doing test automation, at some steps, we will need to perform advanced actions to simulate user.
+
+How to use Actions class?
+
+	#1 -> Create object of Actions class and pass the driver to constructor
+		Actions actions = new Actions(driver);
+
+	#2 -> call the required method or methods for a particular webelement or in general
+
+	#3 -> add perform() or build().perform() at the end
+
+
+Some actions we can do using Actions class:
+
+Actions actions = new Actions(driver);
+
+Hover over and element:
+
+actions.moveToElement(elem).perform();
+
+Click and hold action:
+
+actions.clickAndHold(elem).perform()
+
+actions.dragAndDrop().perform()
+
+actions.doubleClick().perform()
+
+actions.contextClick().perform()
+
+add new class ActionsDemoTest
+
+hover.url=http://practice.cybertekschool.com/hovers
+=======================
+
+WebElement img1 = driver.findElement(By.xpath("(//img)[1]"));
+
+//create Actions class object to be able to hover over image
+Actions actions = new Actions(driver);
+
+//hover over img1
+actions.moveToElement(img1).perform();
+
+In above code, we are locating the image on the page.
+Then creating object of Actions class to be able to hover over.
+We are calling moveToElement(img1) method to hover over the img1 webelement.
+
+perform() method needs to be added at the end to actually Perform/Run the moveToElement or other action
+===================================
+
+Since we mostly need Actions object in our tests, it might be a good idea to add the actions object variable to TestBase class.
+
+TestBase class is parent class to all Test classes, so if we declare protected or public variables or methods, all child classes can access them easily.
+
+public abstract class TestBase {
+    protected WebDriver driver;
+    protected Faker faker = new Faker();
+    protected Actions actions;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = Driver.getDriver();
+        actions = new Actions(driver);
+    }
+
+In above example, we declared:
+	 protected Actions actions;
+
+Then assigned the actual object new Actions(driver) inside the setUp method.
+
+It will ensure that when we create an object of Actions class, we already have an open webdriver object, since Actions class needs an active WebDriver object in the constructor
+
+actions = new Actions(driver);
+
+
+<input class="gNO89b" value="Google Search" aria-label="Google Search" name="btnK" type="submit" data-ved="0ahUKEwiI3-C0vtz0AhXroHIEHcoHBdoQ4dUDCAk">
+
+<input class="gNO89b" value="Google Search" aria-label="Google Search" name="btnK" type="submit" data-ved="0ahUKEwiI3-C0vtz0AhXroHIEHcoHBdoQ4dUDCA0">
+
+Looks like google search button is not unique, there are 2 of them on the page and we need the second one.
+In this situation we can use index:
+
+(//input[@value='Google Search'])[2]
+
+However, using indexes in xpath can fail if they add another matching element to the page. Thats why we need to find a way to find it uniquely first before going for index.
+
+After analyzing, we found out that Google search button element parent has unique class name, so below xpath is finding the parent first then searching for Google search button among child elements:
+
+//div[@class='FPdoLc lJ9FBc']//input[@value='Google Search']
+===============================
+
+add new class ActionsSendKeysTest
+@Test
+public void scrollWithKeysTest
+
+practice.base.url=http://practice.cybertekschool.com
+
+driver.get(ConfigurationReader.getProperty("practice.base.url") + "/hover");
+
+driver.get(ConfigurationReader.getProperty("practice.base.url") + "/tables");
+
+---------------------------
+
+Actions class can also be used to automate keyboard key presses.
+
+actions.sendKeys(Keys.PAGE_UP).perform();
+
+sendKeys method is used to send keyboard presses with Keys class.
+
+---------------------------
+
+How to right click using selenium:
+
+-> I can use Actions class and contextClick() method to perform right click
+
+
+Difference between perform() vs build().perform()
+
+ perform() => When using actions class, if we perform 1 single action
+   ex: actions.moveToElement(btn).perform();
+
+ build().perform() => we use this when we chain multiple actions together.
+ 	Ex: actions.moveToElement(btn)
+			 	.contextClick(btn)
+			 	.sendKeys(Keys.ENTER)
+			 	.build().perform();
+
+One important thing is that perform() method also calls build() method internally, so just perform() should work for multiple actions as well.
+======================================
+
+Add new class ActionsDoubleClickTest
+@Test
+public void doubleClickForColorChange() {
+
+}
+
+doubleclick.url=https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_ev_ondblclick2
+
+========================================
+
+new Actions(driver).doubleClick(text).perform();
+
+The above line combines creating object of Actions class then calling doubleClick method into single statement.
+
+We could do this when we want to perform single action and do not need the actions object any longer.
+
+new ChromeDriver().get("https://www.etsy.com");
+
+===========================================
+
+How to drag and drop using Selenium:
+
+I use actions class and dragAndDrop method for that.
+
+It accepts 2 elements, drag first element and drop to second element
+
+add new class ActionsDragAndDropTest
+
+@Test
+public void dragAndDropTest() {
+
+}
+
+dragadndrop.url=http://demo.guru99.com/test/drag_drop.html
+

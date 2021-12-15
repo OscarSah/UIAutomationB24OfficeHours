@@ -1,0 +1,319 @@
+
+12/12/2021 - Sunday
+-------------------
+
+Test Automation Day 19
+
+Yesterday:
+	- Actions class
+
+When do we use actions class in Selenium?
+	- to perform advanced mouse and keyboard actions like hovering over, double click, right click, drag and drop etc
+	- or sending keyboard clicks like arrow up or down, enter, control etc
+
+Syntax:
+	1) create Actions class object
+	2) call the method by ending with perform() or build().perform();
+
+Actions actions = new Actions(driver);
+actions.moveToElement(elem).perform();
+
+actions.moveToElement(link).click().build().perform();
+===================
+
+Drag and Drop using Actions class.
+
+dragAndDrop(sourceElem, targetElem) => this method accepts 2 webelements, it will Drag sourceElem and Drop onto targetElem.
+
+Actions actions = new Actions(driver);
+actions.dragAndDrop(fiveKPrice , targetEleme),perform();
+
+dragAndDropBy(sourceElem, x , y) => this method accepts 1 element that will be dragged and dropped onto X and Y coordinates on the browser. It is useful especially when doing sliders automation.
+
+How to find x and Y locations, we can use one of the chrome extension called "coordinates".
+
+=======================
+
+add new package day19_page_object_model
+
+add new class DragAndDropTest
+
+@Test
+public void guru99DragAndDropTest() {
+
+}
+https://www.cargurus.com/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePageModel&entitySelectingHelper.selectedEntity=d177&zip=22102
+
+cargurus.url=https://www.cargurus.com
+
+@Test
+public void cargurusPriceSliderTest() {
+	driver.get(ConfigurationReader.getProperty("cargurus.url")+"/Cars/inventorylisting/viewDetailsFilterViewInventoryListing.action?sourceContext=carGurusHomePageModel&entitySelectingHelper.selectedEntity=d177&zip=22102");
+}
+=========================
+
+actions.dragAndDropBy(priceSlider, 100, 0).perform();
+
+We can use dragAndDropBy method for handling sliders using Selenium.
+dragAndDropBy() -> accepts 3 parameters:
+	WebElement to move, x and y coordinates relative to the webelement.
+
+	If you need to move the slider to the right then just increase the X coordinate - like in example above.
+	actions.dragAndDropBy(priceSlider, 100, 0).perform();
+
+	For moving to the left -> provide negative X coordinate:
+	actions.dragAndDropBy(priceSlider, -100, 0).perform();
+
+	For moving up -> provide -> positive Y coordinate
+	For moving down -> privide negative Y coordinate
+
+
+-----------
+actions.clickAndHold(priceSlider)
+       .sendKeys(Keys.ARROW_RIGHT)
+       .release().build().perform();
+
+If we break down the steps in above command:
+	clickAndHold(priceSlider) -> it will click and hold the element like you would do with a cheap mouse.
+
+ 	.sendKeys(Keys.ARROW_RIGHT) => it will press on right arrow on your cheap keyboard
+
+ 	.release() -> will stop the hold and release the element
+
+	.build().perform() => will put together all the actions and then run it. just .perform() also works.
+===========
+
+POM -> Page Object Model
+It is a design structure/pattern in Selenium automation.
+
+We create a dedicated Java class for each Page in our application.
+WebElements on the page will be instance variables for the java page object class.
+
+Actions/steps we do on the page, will be Methods for the java page object class.
+
+Example:
+	Lets say you are searching for user Pacifica mini van on Car gurus website.
+
+	Steps: Goto HomePage
+				=> select options and click search
+		   SearchResultsPage:
+		   		=> adjust price, see the results etc
+		   		=> click on 1 of the vehicles
+		   VehicleDetailsPage
+		   		=> features, contact details, ratings etc
+
+Selenium Code without POM:
+	Select model = new Select(driver.findElement(By.id("make")));
+	model.selectByVisibleText("Pacifica");
+	...
+
+	On next page:
+	WebElement car1 = driver.findElement(By.id("vehicle1"));
+	car1.click();
+
+	On details page:
+
+	WebElement contactDetails = driver.findElement(By.id("contact"));
+	contactDetails.getText() ==> read contact
+
+
+Selenium using POM design:
+
+	CarGuruHomePage homePage = new CarGuruHomePage(driver);
+	homePage.model.selectByVisibleText("Pacifica");
+	homePage.searchBtn.click();
+
+	SearchResultsPage resultsPage = new SearchResultsPage(driver);
+	resultsPage.selectCar(3);
+
+	CarDetailsPage detailsPage = new CarDetailsPage(driver);
+	println(detailsPage.mileAge.getText());
+================================================
+
+add new package pages
+public class LibraryLoginPage {
+
+    @FindBy(id="inputEmail")
+    public WebElement email;
+}
+
+@FindBy is an annotation in selenium that replaces findElement() method
+
+
+WebElement email = driver.findElement(By.id("inputEmail"));
+
+USING POM:
+
+@FindBy(id="inputEmail")
+WebElement email;
+======================================
+
+we add new package dedicated for page object classes.
+
+SeleniumProject:
+	->src.test.java
+		->com.cybertek:
+			-> tests
+			-> utils
+			-> pages
+
+Depending on what company or project you working for, package naming will be reversed.
+verizon.com -> com.verizon
+vytrack -> com.vytrack
+-------------------------
+
+Benefits of POM design pattern:
+	- Reusablity -> we are reusing webelements and methods in page object classes
+	- Easy to maintain -> if locator changes for one of elements, we just go to the page and update there.
+	- Readability -> your code is more readable since we have page names and variable/method names according to each page
+	- Efficiency -> once you set up page objects and add required elements/methods, adding new tests will become much more faster and Efficient.
+	- centralized maintenance of web elements. Web elements in page object can serve as shared/central REPOSITORY of Web elements for the app. So team members can easily collaborate
+	- It automatically helps to avoid StaleElementException after page refresh. If you remember, after page refresh, we have to run findElement method one more time, so if we use POM, it will automatically do that.
+
+========================================
+
+add new class LibraryLoginPOMTest in day19 package
+
+library.url=https://library3.cybertekschool.com/login.html
+
+add new method:
+@Test
+public void invalidCredentialsTest() {
+	driver.get(ConfigurationReader.getProperty("library.url"));
+
+}
+
+====================================
+
+How do you use page object classes?
+=> we create object of the java class then use variables and methods
+
+LibraryLoginPage loginPage = new LibraryLoginPage();
+loginPage.email.sendKeys("invalid_email@gmail.com");
+
+==============================
+
+When we write page object classes, we always need to add a constructor.
+In the constructor, we add a command to initilize all the elements.
+
+public LibraryLoginPage() {
+	PageFactory.initElements(Driver.getDriver(), this);
+}
+
+PageFactory => it is a class that comes from Selenium library.
+This class is used while implement POM design pattern
+It helps with initializing all the webelements that are added to the class.
+If we do not add PageFactory to our constructor, then we will get NullPointerException.
+It has a method called initElements(WebDriver driver, this)
+
+It has 2 arguments:
+	#1 -> WebDriver instance/object
+	#2 -> this -> points to this instance of the class
+
+PageFactory.initElements(driver, this);
+
+After adding the constructor with PageFactory command, all webelements are initialized and we can use them in our Test classes.
+==============================
+
+public class LibraryLoginPage {
+
+    @FindBy(id="inputEmail")
+    public WebElement email;
+
+}
+
+As you can see above, the page object class is missing a constructor.
+If i create an object and try to sendKeys email, it will show an Exception -> NullPointerException.
+
+LibraryLoginPage loginPage = new LibraryLoginPage();
+loginPage.email.sendKeys("abc@yahoo.com");
+
+Error will be thrown because WebElement email is not inialized.
+
+So we need to add a constructor and PageFactory method.
+
+public class LibraryLoginPage {
+
+	public LibraryLoginPage() {
+		PageFactory.initElements(Driver.getDriver(), this);
+	}
+
+    @FindBy(id="inputEmail")
+    public WebElement email;
+
+}
+
+After adding the constructor:
+
+LibraryLoginPage loginPage = new LibraryLoginPage();
+loginPage.email.sendKeys("abc@yahoo.com");
+
+The above code will work perfectly fine. No issues.
+==================================================
+
+@Test
+public void positiveLoginTest() {
+
+}
+
+library3.student.email=student3366@library
+library3.student.password=MU0rEdlK
+=================================================
+
+Since we logged in with valid credentials, now need to verify that
+-"Book Management" label/header is displayed.
+-Page title is "Library"
+
+Since after login, we see a different page, we need a new page object class for this page.
+Lets call the page BookManagementPage
+
+Steps to add a page object class:
+
+#1 add a new class BookManagementPage in pages package
+#2 add Constructor with PageFactory.initElements method
+#3 add required Webelements and methods
+#4 create object of BookManagementPage in the test and use the elements
+
+public class BookManagementPage {
+    public BookManagementPage() {
+        PageFactory.initElements(Driver.getDriver(),this);
+    }
+
+    @FindBy(xpath="//h3[.='Book Management']")
+    public WebElement bookMangtHeader;
+
+    //method to verify if we are on correct page
+    public void isCurrentPage() {
+        Assert.assertEquals(Driver.getDriver().getTitle(),"Library");
+    }
+
+}
+============================
+
+Goto google , search for "comcast internet"
+print results count
+
+my actions:
+	created a new maven project
+	added testNg, webdrivermanager, selenium dependencies
+	a package under src.test.java.com.comcast
+		- tests package
+		- pages package
+	added 2 page objects :
+		GoogleHomePage, GoogleResultsPage
+		added all elements,
+	Added test: GoogleSearchTest
+	created objects of Page objects and put together the steps,
+	added assertions
+	I ran the code.
+	---------------------
+
+	There was no time for adding any utilities.
+So i wrote page objects constructor that accepts WebDriver object.
+===================================================================
+Running All Tests using maven:
+-Click on Terminal at the bottom of intellij
+-type mvn clean test
+	MAC: just click enter
+	WINDOWS Control+Enter
+

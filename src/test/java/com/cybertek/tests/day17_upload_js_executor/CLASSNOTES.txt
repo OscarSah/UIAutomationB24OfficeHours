@@ -1,0 +1,142 @@
+
+12/09/2021 - Thursday
+
+Test Automation Day 17
+----------------------
+
+Yesterday:
+	- downloading files
+	- uploading files
+
+Could you explain please what is better way to store several credentials and work with them?
+
+Like for one project we have different users. For example, in Vytrack project we have store manager, sale manager and truck driver. In order to check something with each user should we create a List or Map with usernames  or something else and then in one TC with loop login and then log out? Or we should create separate Test Cases for each user?
+
+And could we store date as a List or Map in our configuration.properties file? Or we can create a List and assign elements with ConfigurationReader.getProperty?
+-----------------------------------
+
+We can store each credential into properties file and read from there when needed.
+manager.userid=manager1
+manager.pwd=managerpwd
+
+dispatch.userid=dsp1
+dispatch.pwd=dispatchpwd
+....
+
+We can store and read using ConfigurationReader.getProperty("manager.userid")
+------------------
+
+Lets say you have a test(s) that needs to login as multiple roles and check the same thing. Like if all users can successfully login.
+
+In this case, we can put each username+password into Excel file. or Json file
+And our test will read credentials from the file and loop/repeat the test for each user.
+---------------------------------
+
+File upload:
+	- when doing file uploads using selenium, we need to do:
+		-> locate the choose file element
+		-> and perform sendKeys(file_path)
+
+	- Choose file element normally will have <input> tag.
+
+	WebElement chooseFile = driver.findElement(By.id("file-upload"));
+	chooseFile.sendKeys(System.getProperty("user.home") + "/Desktop/image.jpg");
+
+	Normally there is a button that we need to click after setting the file.
+
+add new package day17_upload_js_executor
+add new class Guru99UploadTest
+
+guru99upload.url=http://demo.guru99.com/test/upload
+
+/Users/cybertekb24/Downloads/some-file.txt
+
+System.getProperty("user.home") => "/Users/cybertekb24"
+
+====================================
+
+How to run JavaScript code using Selenium.
+
+JavaScriptExecutor interface is used to run/inject javascript code using selenium.
+
+We can use this for :
+	-> scrolling the page
+	-> opening new tab
+	-> setting value to input field
+	-> clicking some elements
+
+Sometimes, selenium with java might not be able to do certain steps. then we can use powerful javascript language that runs in the browser.
+============================
+
+Syntax:
+
+JavaScriptExecutor js = (JavaScriptExecutor)driver;
+js.executeScript("javascript code");
+
+add new class JavaScriptExecutorTest
+add method alertExampleTest
+
+How to scroll the page down or up using selenium?
+
+I use JavaScriptExecutor interface and executeScript method to scroll the page.
+
+window.scrollBy(0, 1000) is the javascript command.
+
+First cast the driver to JavaScriptExecutor interface
+JavaScriptExecutor js = (JavaScriptExecutor)driver;
+
+Then run window.scrollBy(0, 1000) command using executeScript method.
+
+Scroll down 1000 pixels
+JavaScriptExecutor js = (JavaScriptExecutor)driver;
+js.executeScript("window.scrollBy(0, 1000)");
+
+Scroll up 1000 pixels
+JavaScriptExecutor js = (JavaScriptExecutor)driver;
+js.executeScript("window.scrollBy(0, -1000)");
+=======================================
+
+Scroll until element is visible.
+
+#1 locate the element:
+
+WebElement modelYLabel = driver.findElement(By.xpath("//h1[.='Model Y']"));
+
+#2 cast the driver to JavaScriptExecutor interface:
+
+JavaScriptExecutor js = (JavaScriptExecutor)driver;
+
+#3 run js command: "arguments[0].scrollIntoView(true)", webElement name
+
+js.executeScript("arguments[0].scrollIntoView(true)" , modelYLabel);
+
+tesla.url=https://www.tesla.com
+
+@Test -> scrollToElementTest
+=================================
+
+
+How to write to input box without using sendKeys() method?
+
+I can use JavaScriptExecutor interface in Selenium to set value to input boxes.
+
+#1 locate the input field:
+	WebElement userName = driver.findElement(By.name("email"));
+
+#2 cast to JavascriptExecutor then set value:
+
+	JavascriptExecutor js = (JavascriptExecutor)driver;
+
+	js.executeScript("arguments[0].value='hello@gmail.com'" , userName );
+
+facebook.url=https://www.facebook.com
+
+@Test
+public void setValueUsingJSTest()
+=======================================
+
+
+Weekend:
+	Actions class
+	Page object model
+=======================================
