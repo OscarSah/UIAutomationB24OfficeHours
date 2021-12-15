@@ -38,8 +38,8 @@ public class officeUtils {
 public static int removeProduct(String product){
     int productPrice = 0;
         // remove the product and return its price as well
-
-
+// Delete Button way one: //tbody//tr//td[contains(text(),'Sony vaio i7')]/..//td[.='Delete']/a
+// Delete Button way two: //tbody//tr//td[contains(text(),'Sony vaio i7')]/following-sibling::*/a
     return productPrice;
 }
 
