@@ -45,7 +45,9 @@ public static int removeProduct(String product){
 WebElement deleteButton = Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'"+product+"')]/following-sibling::*/a"));
 WebElement priceTextElement = Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'"+product+"')]/following-sibling::*"));
 
-
+    productPrice = Integer.parseInt(priceTextElement.getText());
+    deleteButton.click();
+    BrowserUtils.sleep(3);
 
     return productPrice;
 }
