@@ -40,6 +40,13 @@ public static int removeProduct(String product){
         // remove the product and return its price as well
 // Delete Button way one: //tbody//tr//td[contains(text(),'Sony vaio i7')]/..//td[.='Delete']/a
 // Delete Button way two: //tbody//tr//td[contains(text(),'Sony vaio i7')]/following-sibling::*/a
+// priceText element: //tbody//tr//td[contains(text(),'Sony vaio i7')]/following-sibling::*
+
+WebElement deleteButton = Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'"+product+"')]/following-sibling::*/a"));
+WebElement priceTextElement = Driver.getDriver().findElement(By.xpath("//tbody//tr//td[contains(text(),'"+product+"')]/following-sibling::*"));
+
+
+
     return productPrice;
 }
 
