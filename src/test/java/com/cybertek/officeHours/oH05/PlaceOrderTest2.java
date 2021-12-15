@@ -37,6 +37,10 @@ public class PlaceOrderTest2 extends TestBase {
         placeOrderPage.fillForm(faker);
         placeOrderPage.purchaseButton.click();
 
+        System.out.println("placeOrderPage.confirmationText.getText() = " + placeOrderPage.confirmationText.getText());
+
+        //     split method with regex "\n"  you need two splits
+
     }
 
 

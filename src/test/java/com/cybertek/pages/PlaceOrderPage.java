@@ -38,6 +38,9 @@ public class PlaceOrderPage {
     @FindBy(xpath = "//button[.='Purchase']")
     public WebElement purchaseButton;
 
+    @FindBy(xpath = "//p[@class='lead text-muted ']")
+    public WebElement confirmationText;
+
     public void fillForm(Faker faker){
 
         nameBox.sendKeys(faker.name().fullName());
