@@ -7,6 +7,7 @@ import com.cybertek.utils.ConfigurationReader;
 import com.cybertek.utils.Driver;
 import com.cybertek.utils.officeUtils;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public class PlaceOrderTest2 extends TestBase {
         placeOrderPage.purchaseButton.click();
 
 
-        System.out.println("placeOrderPage.confirmationText.getText() = " + placeOrderPage.confirmationText.getText());
+     //   System.out.println("placeOrderPage.confirmationText.getText() = " + placeOrderPage.confirmationText.getText());
 
         //     split method with regex "\n"  you need two splits
 
@@ -61,6 +62,23 @@ public class PlaceOrderTest2 extends TestBase {
         }
 
         System.out.println("dataMap = " + dataMap); // dataMap = {Id=5551210}
+
+        // Object: Everything can be Object (String, primitives, Objects created from Class, List<String> , Arrays, ArrayLists
+
+        int actualPrice = Integer.parseInt(((String) dataMap.get("Amount")).split(" ")[0]);
+
+        System.out.println("actualPrice = " + actualPrice);
+
+        System.out.println("Customer name : "+ dataMap.get("Name"));
+
+        System.out.println("Confirmation ID Number for the purchase is : "+ dataMap.get("Id"));
+
+        Assert.assertEquals(actualPrice,expectedPrice,"The Price is NOT as expected");
+
+
+
+
+
     }
 
 
