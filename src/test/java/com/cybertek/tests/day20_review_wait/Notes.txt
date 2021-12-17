@@ -27,5 +27,14 @@ Test Case for Practice:
 
 
     * Actions review
+           Actions Class: is used for "advanced" mouse and keyboard actions
+           * How to use Actions
+            1. Create an object of Actions Class
+            2. Pass "driver" object as a parameter
+            3. USe the object to reach actions methods
+            4. We must use perform() method at the end of the statement
+            Methods: action.moveToElement().perform();
+                     action.doubleClick().perform();
+
     * POM: Page Object Model review
     * New Topic: Explicitly Wait
