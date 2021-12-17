@@ -52,5 +52,9 @@ Test Case for Practice:
             - easy to explain non-technical people
             - handles StaleElement exception, it checks for freshness of the element
 
+**** Between POM pages, you can create inheritance relationship
+If you have a page which is the default (means you see it whereever you navigate) page, then you define it as parent of other POM pages
+
+
 
     * New Topic: Explicitly Wait
