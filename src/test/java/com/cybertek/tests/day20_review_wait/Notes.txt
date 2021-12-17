@@ -18,6 +18,9 @@ Today's Topics:
 TestBase: parent of all the tests in our framework, by extending our test cases
 we can easily handle before and after methods of test cases
 
+If you have a WebElement that disappears after some certain time we can stop DOM(HTML) in debug mode:
+How: at inspect page, click on Sources, then click F8 button at your computer
+
 
 Test Case for Practice:
 //1. Go to https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_ev_ondblclick2
@@ -37,4 +40,17 @@ Test Case for Practice:
                      action.doubleClick().perform();
 
     * POM: Page Object Model review
+        What is Page Object Model Design Pattern
+            We create JAVA classes for our each page of the project
+            We are storing useful WebElements(reusable), methods
+        How do we implement POM Design?
+            constructor: PageFactory class from Selelnium
+            gets two parameters: driver object, this (object of the specific class)
+        Advantages:
+            - Reusability
+            - easy to maintain
+            - easy to explain non-technical people
+            - handles StaleElement exception, it checks for freshness of the element
+
+
     * New Topic: Explicitly Wait
