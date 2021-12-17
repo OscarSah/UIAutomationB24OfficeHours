@@ -1,0 +1,31 @@
+Today's Topics:
+    * iframe review
+        - What is iframe?
+            page in page, HTML inside another html
+        - How do you handle iframes? (PIQ)
+            we need to switch to <iframe> to be able to do any action on any web element inside of it
+        - How many ways do you know to switch
+            3 Ways
+            1. index
+                    driver.switchTo().frame(0)
+            2. id, name
+                    driver.switchTo().frame("id")
+                    driver.switchTo().frame("name")
+            3. web element
+                WebElement iframeLocator = driver.findElement(By.Locator);
+                driver.switchTo().frame(iframeLocator)
+
+TestBase: parent of all the tests in our framework, by extending our test cases
+we can easily handle before and after methods of test cases
+
+
+Test Case for Practice:
+//1. Go to https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_ev_ondblclick2
+//2. Switch to iframe.
+//3. Double click on the text “Double-click me to change my text color.”
+//4. Assert: Text’s “style” attribute value contains “red”.
+
+
+    * Actions review
+    * POM: Page Object Model review
+    * New Topic: Explicitly Wait
