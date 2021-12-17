@@ -54,7 +54,38 @@ Test Case for Practice:
 
 **** Between POM pages, you can create inheritance relationship
 If you have a page which is the default (means you see it whereever you navigate) page, then you define it as parent of other POM pages
-
-
-
+**********************************************
+        *** Homework for later
+                   create POM pages for allProducts and Order page
+Homework 2
+Go to http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx
+Login: credentials(Tester and test)
+Navigate to Orders link, then navigate back to AllOrders link
+click on one checkBox for "Charles Dodgeson"
+then click deleteButton
+then logout from the page
+************************************************************
     * New Topic: Explicitly Wait
+    PIQ: How do you handle synchronization in Selenium?
+    What is synchronization?
+        Moving, working, operating at the same time
+        in movies voice and picture do not operate together
+        men (from Mars) and women (from Venus)
+
+    In Web Automation: JAVA is fast,  web page is slower, we need to handle this synchronization problem
+    otherwise our code will break.
+
+    1. Static Wait: Thread.sleep method from JAVA--- BrowserUtils.sleep method
+            I put 2 seconds for my test, my freind clones the project, but 2 seconds not enough for him
+            Environmental pronlem, maybe the internet is slower at his house
+    2. Dynamic Waits:
+            * Implicit Wait ( applies to all elements of the project, you need to define one time)
+            * Explicit Wait
+                Can be used to wait under certain condition
+                        - wait until element is visible
+                        - wait until element is clickable
+                Does not depend on the wait time of Implicit wait
+                Only applies one time in that line that is used
+
+
+
